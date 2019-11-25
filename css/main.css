@@ -1,0 +1,80 @@
+body{
+    
+    background-image:url('../static/bg.jpg');
+    background-size:100% 100%;
+}
+.console{
+    position: fixed;
+    z-index: 1;
+    top:0;
+    left:0;
+    width:100%;
+    height: 60px;
+    background-color:#789ebe;
+}
+
+.message{
+    position: fixed;
+    z-index: 1;
+    top:60px;
+    left:0;
+    width:100%;
+    height:100%;
+    font-size: 50px;
+    text-align: center;
+    line-height: 667px;
+
+}
+.score{
+    line-height:40px;
+}
+
+.drop{
+    line-height:10px;
+}
+.level,.time,.add{
+    z-index: 2;
+    float: left;
+    width: 33.3%;
+    height: 100%;
+    font-size: large;
+    color: white;
+    text-align: center;
+    background: -webkit-linear-gradient(top,#4ca8ff,rgb(32, 79, 167));
+}
+
+.level,.time{
+    line-height: 60px;
+}
+
+
+
+.promte{
+    margin-top: 20px;
+    text-align: center;
+}
+
+html, body, #app,#box {
+    width: 100%;
+    height: 100%;
+    margin:0;
+    padding:0;
+}
+
+#recv {
+    position: absolute;
+    z-index: 2;
+    top:80%;
+    bottom: 10px;
+    left: 100px;
+    width: 100px;
+    height: 100px;
+    background-image: url("../static/sock.png");
+    background-size:100px 100px;
+}
+.item {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    background-size:50px 50px;
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>游戏结束</title>
+</head>
+<style>
+    body{
+        background-image: url('../static/over.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    .window{
+        position: relative;
+        text-align: center;
+        top:230px;
+      }
+    .bg-pic{
+        width:80%;
+        height:80%;
+    }
+    .nickname{
+        position: absolute;
+        top:150px;
+        left:100px;
+    }
+    h2{
+        position:absolute;
+        top:50px;
+        left:135px;
+        color:#3b4e9e;
+        font-family: "Microsoft Yahei";
+    }
+    .confirm{
+        position: relative;
+        width: 287px;
+        height: 70px;
+        top:20px;
+    }
+    .retry{
+        position: relative;
+        width: 287px;
+        height: 70px;
+        top:20px;
+    }
+
+</style>
+<body>
+    <div class="window">
+    <image class="bg-pic"src="../static/window_grade.png"></image>
+    <h2>游戏结束</h2>
+    <div class="nickname">
+    <input type="text" name="nickname" placeholder="请输入您的昵称">
+    </div>
+        <image class="confirm" src="../static/confirm.png" onclick="window.location.href='avatar.html'"></image>
+        <image class="retry" src="../static/retry.png" onclick="window.location.href='main.html'"></image>
+    </div>
+
+<script>
+    localStorage.getItem("nickname");
+
+</script>
+</body>

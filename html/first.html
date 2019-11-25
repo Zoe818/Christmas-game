@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>开始游戏</title>
+</head>
+
+<style>
+    body{
+        background-image: url('../static/shouye1.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .buttons{
+        position: relative;
+        flex-direction: column;
+        text-align: center;
+        line-height: 70px;
+        top:250px;
+    }
+    #start,#explain,#score,#avatar{
+        width:120px;
+    }
+</style>
+
+<body>
+
+    <div class="buttons">
+       <div><image id="start" src="../static/start.png"onclick="window.location.href='main.html'"></image></div>
+        <div><image id="explain" src="../static/explain.png"onclick="window.location.href='explain.html'"></image></div>
+        <div><image id="score" src="../static/score.png" onclick="window.location.href='score.html'"></image></div>
+       <div><image id="avatar" src="../static/avatar.png"></image></div>
+    </div>
+
+</body>
+</html>
