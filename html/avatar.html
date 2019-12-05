@@ -1,20 +1,69 @@
 <!DOCTYPE html>
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>排行榜</title>
+    <title>头像编辑</title>
 </head>
-
 <style>
-body{
-    background-image: url('../static/over-01.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-}
+    html,body{
+        background-image: url('../static/bg.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        width:100%;
+        height:100%;
+        margin:0;
+        padding:0;
+    }
+    .window{
+        position: relative;
+        text-align: center;
+        top:20%;
+      }
+    .bg-pic{
+        width: 90%;
+    }
+    .confirm{
+        position: absolute;
+        top:30%;
+        left:0;
+        right:0;
+        bottom:0;
+        margin:auto;
+        width: 287px;
+        height: 100px;
+    }
+    p{
+        position: absolute;
+        top:40%;
+        left: 0;
+        right:0;
+        bottom:0;
+        margin:auto;
+        color:#3b4e9e;
+        font-family: "Microsoft Yahei";
+        font-size:large;
+    }
+
+    .retry{
+        position: relative;
+        width: 287px;
+        height: 70px;
+        top:20px;
+    }
 
 </style>
-
 <body>
+    <div class="window">
+    <image class="bg-pic"src="../static/window_grade.png"></image>
+    <p>快为自己的头像带上圣诞帽吧！</p>
 
+        <image class="confirm" src="../static/edit.png" onclick="window.location.href=''"></image>
+        <image class="retry" src="../static/retry.png" onclick="window.location.href='main.html'"></image>
+    </div>
+
+<script>
+    localStorage.getItem("nickname");
+
+</script>
 </body>
-</html>

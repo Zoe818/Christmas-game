@@ -19,7 +19,7 @@ let gameLogic = function() {
 			recver = recvObj;
 			appWidth = obj.clientWidth;
 			appHeight = obj.clientHeight;
-			//console.log(appHeight);
+			console.log('appHeight'+appHeight);
 		}
 
 		/**
@@ -86,8 +86,10 @@ let gameLogic = function() {
 					// 降落完成
 					// TODO 删除DOM节点
 					clearInterval(intId);
-					if(inter[intId]!==undefined) delete(inter[intId]);
-				}else{
+					delete(inter[intId]);
+
+				}
+				else{
 					// 降落继续
 					item.style.top = (offTop+addHeight)+'px';
 				}

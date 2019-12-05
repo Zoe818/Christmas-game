@@ -10,8 +10,9 @@
         }
     }
 })();
-var recv = document.getElementById("recv"),
-    score=document.getElementById("score");
+
+
+var recv = document.getElementById("recv");
 
 //控制方向移动
 function recvMove(direction){
@@ -28,40 +29,28 @@ function recvMove(direction){
 }
 
 let drag = document.getElementById('recv');
-var oBox=document.getElementById('box');
-
+var body=document.querySelector('body');
+var startIndex,endIndex,touchIndex,tranX;
 	let flag = false;
-    let downX = 0;
-    oBox.ontouchmove=evt=>{
-        // console.log(evt.clientX);
-    }
+    let appWidth = body.clientWidth;
+
+//触摸移动
 
     drag.ontouchmove=evt=>{
+        let appWidth = body.clientWidth;
         let touch = evt.targetTouches[0];
-            drag.style.left=`${touch.clientX-downX}px`;
+            drag.style.left=`${touch.clientX}px`;
+            //console.log(touch.clientX);
+            if(touch.clientX>appWidth-100)
+            {
+                drag.style.left=`${appWidth-100}px`;
+            }
+            else if(touch.clientX<0)
+            {
+                drag.style.left=0;
+            }
     }
     drag.ontouchend=evt=>{
         // console.log('up');
         flag=false;
     }
-
-
-
-	oBox.onmousemove = evt => {
-		// console.log(evt.clientX);
-	}
-	drag.onmousedown = evt => {
-		downX = evt.layerX;
-		flag=true;
-	}
-	drag.onmousemove = evt => {
-		if(flag) {
-			console.log(evt);
-			drag.style.left = `${evt.clientX-downX}px`;
-		}
-	}
-	drag.onmouseup = evt => {
-		console.log('up');
-		flag=false;
-    }
-    

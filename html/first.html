@@ -1,15 +1,22 @@
 <!DOCTYPE html>
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+   <!--<embed src="" hidden="false" autostart="true" loop="true">-->
 <title>开始游戏</title>
+
 </head>
 
 <style>
-    body{
+    html,body{
         background-image: url('../static/shouye1.jpg');
         background-repeat: no-repeat;
         background-size: cover;
+        width: 100%;
+        height: 100%;
+        margin:0;
+        padding:0;
     }
 
     .buttons{
@@ -22,15 +29,22 @@
     #start,#explain,#score,#avatar{
         width:120px;
     }
+    .music{
+        position: relative;
+        top:5%;
+        text-align: center;
+    }
 </style>
 
 <body>
-
+    <div class=music>
+    <audio autoplay="autoplay" loop="loop" preload="auto" controls="controls" src=""></audio>
+    </div>
     <div class="buttons">
        <div><image id="start" src="../static/start.png"onclick="window.location.href='main.html'"></image></div>
         <div><image id="explain" src="../static/explain.png"onclick="window.location.href='explain.html'"></image></div>
         <div><image id="score" src="../static/score.png" onclick="window.location.href='score.html'"></image></div>
-       <div><image id="avatar" src="../static/avatar.png"></image></div>
+       <div><image id="avatar" src="../static/avatar.png"onclick="window.location.href='avatar.html'"></image></div>
     </div>
 
 </body>

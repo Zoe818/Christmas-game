@@ -9,10 +9,7 @@
 <body>
 
 	<div id='app'></div>
-	<div id='box'>
 	<div id='recv' class='recv'></div>
-    </div>
-	<div id="panel" class="panel">
 			<header>
 				<div class="console">
 					<div class="add">
@@ -32,8 +29,6 @@
                     </div>
 				</div>
 			</header>
-			
-		</div>
 <script src="..\js\fall.js" type="text/javascript"></script>
 <script src="..\js\main.js" type="text/javascript"></script>
 
@@ -48,6 +43,43 @@
 		score.innerHTML=s;
 	}
 	//计时器函数
+
+	var t=30;
+	var time=document.getElementsByClassName("time")[0];
+
+	var start=setInterval(()=>{
+		t--;
+		time.innerHTML=t;
+		if(t<=0&&s<50||s<0)
+		{
+		window.location.href="over.html";
+		clearInterval(start);
+		}
+		else if(t<=0&&s>=50)
+		{
+			clearInterval(start);
+			clearInterval(id);
+			setInterval(()=>
+			{
+				gameController.gen(1000, kinds[~~(Math.random()*4)]);
+			},800);
+			t=30;
+			var next=setInterval(()=>{
+			t--;
+			time.innerHTML=t;
+			if(t<=0||s<0){
+				window.location.href="over.html";
+				clearInterval(next);
+			}	
+			},1000);
+
+		}
+	},1000);
+
+
+
+
+/*
     var t=30;
     var time=document.getElementsByClassName("time")[0];
     function fun()
@@ -69,7 +101,7 @@
 			
 		}
     }
-    var inter=setInterval("fun()",500);
+    var inter=setInterval("fun()",1000);*/
 
 //下落节点记录
 	let kinds = [
