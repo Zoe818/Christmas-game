@@ -30,8 +30,8 @@
         right:0;
         bottom:0;
         margin:auto;
-        width: 287px;
-        height: 100px;
+        width: 200px;
+
     }
     p{
         position: absolute;
@@ -45,6 +45,17 @@
         font-size:large;
     }
 
+    h2{
+        position: absolute;
+        top:30%;
+        left: 0;
+        right:0;
+        bottom:0;
+        margin:auto;
+        color:#3b4e9e;
+        font-family: "Microsoft Yahei";
+  
+    }
     .retry{
         position: relative;
         width: 287px;
@@ -56,6 +67,7 @@
 <body>
     <div class="window">
     <image class="bg-pic"src="../static/window_grade.png"></image>
+    <h2 id="nicknames">姓名</h2>
     <p>快为自己的头像带上圣诞帽吧！</p>
 
         <image class="confirm" src="../static/edit.png" onclick="window.location.href=''"></image>
@@ -63,7 +75,6 @@
     </div>
 
 <script>
-    localStorage.getItem("nickname");
 
 </script>
 </body>

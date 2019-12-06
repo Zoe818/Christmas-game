@@ -9,12 +9,12 @@
 }
 
 .score{
-    line-height:30px;
+    line-height:60px;
 }
-
+/*
 .drop{
     line-height:30px;
-}
+}*/
 
 .level,.time,.add{
     z-index: 2;

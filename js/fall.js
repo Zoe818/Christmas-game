@@ -64,9 +64,10 @@ let gameLogic = function() {
 							score: type
 						}
 					}));
+					deleNode(item);
 				}
-				delete(timer[item]);
-			}, sec);
+				delete(timer[timerId]);
+			},sec*0.92);
 			timer[timerId] = timerId;
 		}
 
@@ -87,6 +88,7 @@ let gameLogic = function() {
 					// TODO 删除DOM节点
 					clearInterval(intId);
 					delete(inter[intId]);
+					deleNode(item);
 
 				}
 				else{
@@ -98,6 +100,9 @@ let gameLogic = function() {
 			return intId;
 		}
 
+		function deleNode(item){
+			dom.removeChild(item);
+		}
 		return {
 			/**
 			 * 初始化gameController
