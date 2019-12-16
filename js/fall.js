@@ -67,7 +67,11 @@ let gameLogic = function() {
 					deleNode(item);
 				}
 				delete(timer[timerId]);
+<<<<<<< HEAD
 			},sec*0.92);
+=======
+			}, sec*0.92);
+>>>>>>> c9994995ec896b25fd30a19f475064b270bc59c4
 			timer[timerId] = timerId;
 		}
 
@@ -89,7 +93,10 @@ let gameLogic = function() {
 					clearInterval(intId);
 					delete(inter[intId]);
 					deleNode(item);
+<<<<<<< HEAD
 
+=======
+>>>>>>> c9994995ec896b25fd30a19f475064b270bc59c4
 				}
 				else{
 					// 降落继续
@@ -100,9 +107,20 @@ let gameLogic = function() {
 			return intId;
 		}
 
+<<<<<<< HEAD
 		function deleNode(item){
 			dom.removeChild(item);
 		}
+=======
+		/**
+		 * 删除dom节点
+		 * @params item 要删除的节点
+		 */
+		function deleNode(item) {
+			dom.removeChild(item);
+		}
+
+>>>>>>> c9994995ec896b25fd30a19f475064b270bc59c4
 		return {
 			/**
 			 * 初始化gameController
