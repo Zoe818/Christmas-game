@@ -6,15 +6,96 @@
 </head>
 
 <style>
-body{
-    background-image: url('../static/top1.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-}
+    html, body {
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        margin: 0;
+    }
 
+    body{
+        background-image: url('../static/top3.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    #ranklist {
+        margin: 150px auto 0 auto;
+        width: 350px;
+    }
+
+    .table-head th {
+        color: white;
+    }
+
+    .table-content td {
+        color: rgb(88, 67, 114);
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+    }
 </style>
 
 <body>
+<table id="ranklist">
+    <tr class="table-head">
+        <th>排名</th>
+        <th>姓名</th>
+        <th>分数</th>
+    </tr>
+    <!--<tr class="table-content">-->
+        <!--<td>1</td>-->
+        <!--<td>汤汤</td>-->
+        <!--<td>789</td>-->
+    <!--</tr>-->
+</table>
+<script type="module">
+    import { getRankList } from "../js/api";
 
+    window.onload = async () => {
+        const response = await getRankList({
+            page: 1,
+            count: 10
+        });
+        if(response.code === 0) {
+        // if(true) {
+            let data = response.data;
+            // let data = [
+            //     {
+            //         nickname: '六游',
+            //         score: 123,
+            //         'create_time': '2019-11-24T22:20:54Z'
+            //     },
+            //     {
+            //         nickname: '汤汤',
+            //         score: 23,
+            //         'create_time': '2019-11-24T22:20:54Z'
+            //     },
+            //     {
+            //         nickname: '文强',
+            //         score: 3,
+            //         'create_time': '2019-11-24T22:20:54Z'
+            //     }
+            // ];
+            let parent = document.getElementById('ranklist');
+            data.forEach( (val, index) => {
+                let child = document.createElement('tr');
+                child.setAttribute('class', 'table-content');
+                let td1 = document.createElement('td');
+                td1.innerHTML = index+1;
+                let td2 = document.createElement('td');
+                td2.innerHTML = val.nickname;
+                let td3 = document.createElement('td');
+                td3.innerHTML = val.score;
+                child.appendChild(td1);
+                child.appendChild(td2);
+                child.appendChild(td3);
+                parent.appendChild(child);
+            });
+        }else{
+            // error
+        }
+    }
+</script>
 </body>
 </html>

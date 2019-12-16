@@ -1,3 +1,7 @@
+/*
+  请求函数
+ */
+
 import { baseUrl } from './env'
 
 export default async function(url = '', method = 'GET', data = {} ){

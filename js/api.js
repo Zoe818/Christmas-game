@@ -1,3 +1,8 @@
+/*
+ API
+ */
+
+
 import fetch from './fetch'
 
 /**
