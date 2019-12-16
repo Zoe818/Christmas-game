@@ -32,7 +32,7 @@
 
 <script src="..\js\fall.js" type="text/javascript"></script>
 <script src="..\js\main.js" type="text/javascript"></script>
-
+<script src="..\js\alert.js" type="text/javascript"></script>
 
 <script>
 	//积分函数
@@ -59,6 +59,7 @@
 		}
 		else if(t<=0&&s>=50)
 		{
+			showAlert('恭喜，进入第二关！');
 			let l=2;
 			let level=document.getElementById("level");
 			level.innerHTML=l;
@@ -66,9 +67,10 @@
 			clearInterval(id);
 			setInterval(()=>
 			{
-				gameController.gen(1000, kinds[~~(Math.random()*4)]);
+				gameController.gen(1000, kinds[~~(Math.random()*5)]);
 			},800);
 			t=30;
+
 			var next=setInterval(()=>{
 			t--;
 			time.innerHTML=t;
@@ -100,6 +102,10 @@
 		{
 			score: 10,
 			img: '../static/gift2.png'
+		},
+		{
+			score:25,
+			img:'../static/feima.png'
 		}
 	];
 	let backDom = document.getElementById('app');
@@ -114,7 +120,7 @@
 	console.log(gameController.test());
 	console.log(gameController);
 	let id = setInterval( () => {
-		gameController.gen(1500, kinds[~~(Math.random()*4)]);
+		gameController.gen(1500, kinds[~~(Math.random()*5)]);
 	},1000);
 
 </script>
