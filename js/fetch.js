@@ -2,11 +2,10 @@
   请求函数
  */
 
-import { baseUrl } from './env'
-
-export default async function(url = '', method = 'GET', data = {} ){
+let baseUrl = 'http://localhost/christmas/back_end/public/index/'; // TODO
+async function fetch(url = '', method = 'GET', data = {} ){
     // method大写
-    method = method.toUpperCase();
+    method = String(method).toUpperCase();
     // 地址拼接
     if(url.substr(0,1)==='/') {
         url = baseUrl + url.substr(1);

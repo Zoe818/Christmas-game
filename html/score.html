@@ -49,11 +49,10 @@
         <!--<td>789</td>-->
     <!--</tr>-->
 </table>
-<script type="module">
-    import { getRankList } from "../js/api";
-
+<script src="../js/fetch.js" type="text/javascript"></script>
+<script>
     window.onload = async () => {
-        const response = await getRankList({
+        const response = await fetch('/score', 'GET', {
             page: 1,
             count: 10
         });
