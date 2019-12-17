@@ -62,18 +62,33 @@
     <image class="bg-pic"src="../static/window_grade.png"></image>
     <h2>游戏结束</h2>
     <div class="nickname">
-    <input type="text" id="nickname" placeholder="请输入您的昵称">
+        <input type="text" id="nickname" placeholder="请输入您的昵称">
     </div>
-        <image class="confirm" src="../static/confirm.png" onclick="window.location.href='avatar.html'"></image>
-        <image class="retry" src="../static/retry.png" onclick="window.location.href='main.html'"></image>
+        <image class="confirm" src="../static/confirm.png" id="submit-btn"></image>
+        <image class="retry" src="../static/retry.png" id="retry-btn" onclick="window.location.href='main.html'"></image>
     </div>
-
+<script src="../js/fetch.js" type="text/javascript"></script>
 <script>
-    var input=document.getElementById('nickname');
+
+    let nickname = '';
+    let input=document.getElementById('nickname');
     input.oninput=input.onpropertychange=function(){
-        var name=this.value;
+        nickname=this.value;
        // console.log(name);
     }
 
+    // 绑定submit Image
+    document.getElementById('submit-btn').onclick = async () => {
+        const response = await fetch('/score', 'POST', {
+            nickname,
+            score: 123, // TODO
+        });
+        if(response.code === 0) {
+            // success
+            window.location.href='avatar.html'
+        }else{
+            // error
+        }
+    };
 </script>
 </body>

@@ -24,7 +24,6 @@ let gameLogic = function() {
 
 		/**
 		 * Random 起始下落的左下角x坐标
-		 * @param width 屏幕宽度
 		 */
 		function randomX() {
 			let ran = Math.random();
