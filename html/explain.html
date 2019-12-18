@@ -7,8 +7,8 @@
 
 <style>
 html,body{
-    background-image: url('../static/bg-explain.jpg');
-    background-size:contain;
+    background-image: url('../static/bg.jpg');
+    background-size:cover;
     background-repeat: repeat;
     width: 100%;
     height: 100%;
@@ -16,16 +16,27 @@ html,body{
     padding:0;
 }
 
+.explain{
+    position: absolute;
+    top:10%;
+    width:80%;
+    margin:auto;
+    left:0;
+    right:0;
+    
+}
 .btn{
-    position: fixed;
+    position: absolute;
     width:150px;
-    top:620px;
-    left:30%;
-
+    margin:auto;
+    top:80%;
+    left:0;
+    right:0;
 }
 </style>
 
 <body>
+<image class="explain" src="../static/word.png"></image>
 <image class="btn" src='../static/start.png' onclick="window.location.href='main.html'"></button>
 </body>
 </html>

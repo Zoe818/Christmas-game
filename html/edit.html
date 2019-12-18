@@ -14,17 +14,15 @@
     }
 
     body{
-        background-image: url('../static/edit.jpg');
+        background-image: url('../static/bg.jpg');
         background-repeat: no-repeat;
-        background-size: contain;
+        background-size: cover;
     }
 
     #back-btn {
         position: absolute;
         top: 20px;
         left: 20px;
-        width: 31px;
-        height: 21px;
     }
 
     #submit-btn {
@@ -44,14 +42,14 @@
     .window{
         position: relative;
         text-align: center;
-        top: calc(28% + 3px);
+        top: calc(25% + 3px);
         padding-right: 3px;
     }
 
     #bg-pic, #upload-img, #final-avator{
         box-sizing: border-box;
-        width: 230px;
-        height: 230px;
+        width: 200px;
+        height: 200px;
         border-radius: 1.1em;
         margin: 0 auto;
         overflow: hidden;
@@ -59,8 +57,8 @@
 
     #bg-pic > img, #final-avator > img {
         position: absolute;
-        width: 230px;
-        height: 230px;
+        width: 200px;
+        height: 200px;
         margin-left: -115px;
         border-radius: 1.1em;
         z-index: -1;
@@ -89,6 +87,8 @@
 
     #upload-img {
         cursor: pointer;
+        background-image: url('../static/square.png');
+        background-size: cover;
     }
 
     #upload-img::before {
@@ -98,7 +98,7 @@
         width: 3px;
         border-radius: 3px;
         background: #3b4e9e;
-        margin: 65px 0 0 114px;
+        margin: 65px 0 0 100px;
     }
 
     #upload-img::after {
@@ -108,14 +108,16 @@
         height: 3px;
         border-radius: 3px;
         background: #3b4e9e;
-        margin: 99px 0 0 -148px;
+        margin: 100px 0 0 -136px;
     }
 
     #upload-img > span {
         display: inline-block;
         position: absolute;
         top: 150px;
-        left: 168px;
+        left: 0;
+        right:0;
+        margin:auto;
         color: #3b4e9e;
         font-size: 19px;
         font-weight: bold;
@@ -133,14 +135,17 @@
         align-items: center;
         bottom: 0;
         width: 100%;
-        height: 180px;
+        height:200px;
         overflow-x: scroll;
+        background-color: rgba(255,255,255,0.4);
+
     }
 
     .slide > div {
         flex-shrink: 0;
-        width: 110px;
-        height: 110px;
+        width: 28%;
+        height:0;
+        padding:14% 0;
         background: rgba(59, 79, 159, 0.7);
         border-radius: 100%;
         border: none;
@@ -162,16 +167,24 @@
         position: absolute;
         display: flex;
         justify-content: space-around;
-        width: 100%;
-        bottom: 200px;
+        width: 100%;      
+        bottom: 180px;
+        background-image: url("../static/border.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height:50px;
     }
 
     .tags > div  {
+        position: relative;
+        top:5px;
         width: 30%;
         height: 30px;
         background-repeat: no-repeat;
         background-size: contain;
         background-position-x: center;
+
     }
 
     #final-background {
@@ -234,19 +247,19 @@
 </style>
 <body>
     <div id="final-background"></div>
-    <button id="back-btn" onclick="window.go(-1)">
-        <img src="../static/back-icon.png" width="30" height="30">
-    </button>
+        <img id="back-btn" src="../static/back-icon.png" width="30" height="30"onclick="window.go(-1)">
     <button id="submit-btn" onclick="submitImg()">完成</button>
     <div class="window">
+
         <div id="upload-img">
             <input id="upload-input" type="file" accept="image/*">
-            <span>选择头像</span>
+            <span class="word">选择头像</span>
         </div>
         <div id="bg-pic" style="display: none"></div>
         <div id="final-avator" style="display: none"></div>
     </div>
     <div class="tags" id="tags-div">
+        
         <div id="hat" class="hat-active" onclick="changeTagActive('hat')"></div>
         <div id="elk" class="elk-none" onclick="changeTagActive('elk')"></div>
         <div id="oji" class="oji-none" onclick="changeTagActive('oji')"></div>
