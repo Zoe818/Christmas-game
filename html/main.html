@@ -68,24 +68,47 @@
 			setInterval(()=>
 			{
 				gameController.gen(1000, kinds[~~(Math.random()*5)]);
-			},800);
+			},900);
 			t=30;
 
 			var next=setInterval(()=>{
 			t--;
 			time.innerHTML=t;
-			if(t<=0||s<0){
-			    let resGrade = localStorage.getItem('maxGrade');
-			    if(String(resGrade) === 'null') {
-			        localStorage.setItem('maxGrade', s+500);
-                } else {
-			        if(parseInt(resGrade) < s+500) {
-                        localStorage.setItem('maxGrade', s+500);
-                    }
+			if(t<=0&&s<500||s<0){
+			  let resGrade = localStorage.getItem('maxGrade');
+		    if(String(resGrade) === 'null') {
+			    localStorage.setItem('maxGrade', s+500);
+        } else {
+	        if(parseInt(resGrade) < s+500) {
+            localStorage.setItem('maxGrade', s+500);
+          }
 				}
 				window.location.href="over.html";
 				clearInterval(next);
-			}	
+			}
+			else if(t<=0&&s>=500)
+			{
+				showAlert("恭喜，进入第三关！");
+				let l=3;
+				let level=document.getElementById("level");
+				level.innerHTML=l;
+				clearInterval(start);
+				clearInterval(id);
+				setInterval(()=>
+				{
+					gameController.gen(1000, kinds[~~(Math.random()*5)]);
+				},800);
+				t=30;
+
+				var next=setInterval(()=>{
+				t--;
+				time.innerHTML=t;
+			    if(t<=0||s<0){
+				window.location.href="over.html";
+				clearInterval(next);
+			    }					
+			},1000)
+			}
 			},1000);
 
 		}
