@@ -19,13 +19,25 @@
         background-size: contain;
     }
 
+    #back-btn {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 31px;
+        height: 21px;
+    }
+
     #submit-btn {
         position: absolute;
         right: 20px;
         top: 20px;
         background: white;
-        font-size: 20px;
-        border-radius: 0.5em;
+        font-size: 18px;
+        border: none;
+        border-radius: 0.7em;
+        padding: 3px 12px;
+        font-weight: bold;
+        color: #3b4e9e;
         display: none;
     }
 
@@ -63,10 +75,16 @@
 
     #rotate-btn {
         display: inline-block;
-        width: 30px;
-        height: 30px;
-        background: red;
+        width: 25px;
+        height: 25px;
         z-index: 20;
+        border-radius: 100%;
+        margin-left: -14px;
+        margin-top: -14px;
+    }
+
+    #target-img {
+        border: 2px dashed rgba(255,255,255,0.8);
     }
 
     #upload-img {
@@ -216,7 +234,10 @@
 </style>
 <body>
     <div id="final-background"></div>
-    <button id="submit-btn" onclick="submitImg()">Test</button>
+    <button id="back-btn" onclick="window.go(-1)">
+        <img src="../static/back-icon.png" width="30" height="30">
+    </button>
+    <button id="submit-btn" onclick="submitImg()">完成</button>
     <div class="window">
         <div id="upload-img">
             <input id="upload-input" type="file" accept="image/*">
@@ -231,24 +252,6 @@
         <div id="oji" class="oji-none" onclick="changeTagActive('oji')"></div>
     </div>
     <div class="slide" id="slide-div">
-        <div onclick="confirmTitle(this)">
-            <img src="../static/test.png" alt="test">
-        </div>
-        <div onclick="confirmTitle(this)">
-            <img src="../static/test.png" alt="test">
-        </div>
-        <div onclick="confirmTitle(this)">
-            <img src="../static/test.png" alt="test">
-        </div>
-        <div onclick="confirmTitle(this)">
-            <img src="../static/test.png" alt="test">
-        </div>
-        <div onclick="confirmTitle(this)">
-            <img src="../static/test.png" alt="test">
-        </div>
-        <div onclick="confirmTitle(this)">
-            <img src="../static/test.png" alt="test">
-        </div>
     </div>
     <div id="final-btn-group">
         <img src="../static/save.png" width="230">
@@ -258,6 +261,90 @@
     <script src="../js/fetch.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
     <script>
+        let grade = 0;
+        let icon_base = '../static/icon/';
+        let imgs = {
+            elk: [
+                {
+                    name: 'deer0.png'
+                },
+                {
+                    name: 'deer2.png',
+                    lock: 'deer2_lock.png',
+                    grade: 30
+                },
+                {
+                    name: 'deer3.png',
+                    lock: 'deer3_lock.png',
+                    grade: 50
+                },
+                {
+                    name: 'deer3(2).png',
+                    lock: 'deer3(2)_lock.png',
+                    grade: 100
+                }
+            ],
+            hat: [
+                {
+                    name: 'hat0.png'
+                },
+                {
+                    name: 'hat2.png',
+                    lock: 'hat2_lock.png',
+                    grade: 30
+                },
+                {
+                    name: 'hat2 (2).png',
+                    lock: 'hat2  (2)_lock.png',
+                    grade: 50
+                },
+                {
+                    name: 'hat3 .png',
+                    lock: 'hat3_lock.png',
+                    grade: 100
+                },
+                {
+                    name: 'hat3(2).png',
+                    lock: 'hat3(2)_lock.png',
+                    grade: 180
+                },
+                {
+                    name: 'hat3(3).png',
+                    lock: 'hat3(3)_lock.png',
+                    grade: 180
+                }
+            ],
+            oji: [
+                {
+                    name: 'mustache0(1).png'
+                },
+                {
+                    name: 'mustache0(2).png'
+                },
+                {
+                    name: 'mustache2 .png',
+                    lock: 'mustache2_lock.png',
+                    grade: 50
+                },
+                {
+                    name: 'mustache3(1).png',
+                    lock: 'mustache3(1)_lock.png',
+                    grade: 50
+                },
+                {
+                    name: 'mustache3(2).png',
+                    lock: 'mustache3(2)_lock.png',
+                    grade: 100
+                }
+            ]
+        };
+        let imgs_dom = {
+            elk: [],
+            hat: [],
+            oji: []
+        };
+        let icon_name = '';
+
         let tags_dom = {
             elk: null,
             hat: null,
@@ -282,6 +369,9 @@
             upload_hint_dom = document.getElementById('upload-img');
             avator_bg_dom = document.getElementById('bg-pic');
             final_avator_dom = document.getElementById('final-avator');
+            grade = String(localStorage.getItem('maxGrade')) === 'null'?0:parseInt(localStorage.getItem('maxGrade'));
+            loadImgs();
+            display('hat');
             // 绑定上传头像事件
             document.getElementById('upload-input').onchange = img => {
                 bg_file = img.target.files[0];
@@ -303,6 +393,7 @@
             tags_dom[active_tag].setAttribute('class', `${active_tag}-none`);
             tags_dom[tag].setAttribute('class', `${tag}-active`);
             // TODO change slide content
+            display(tag);
             active_tag = tag;
         }
 
@@ -324,11 +415,13 @@
         }
 
         /* 点击生成图片的函数 */
-        function confirmTitle(my) {
+        function confirmTitle(my, iconName) {
             if(bg_file===null)return;
             // 删除之前的贴纸
             if(itemDom!==null) document.getElementById('bg-pic').removeChild(itemDom);
             else document.getElementById('submit-btn').setAttribute('style', 'display: block');
+
+            icon_name = iconName;
             //初始化定位
             let left = ($(window).width() - 209) / 2,
                 top = ($(window).height() - 209) / 2;
@@ -341,7 +434,7 @@
                 width: 70,
                 height: 70
             }).appendTo(elelayer);
-            $(`<img id="rotate-btn" src="${ROTATE_ICON}">`).appendTo(elelayer);
+            $(`<img id="rotate-btn" src="../static/turn.png">`).appendTo(elelayer);
             let widthOrg = elelayer.find("img").width(),
                 heightOrg = elelayer.find("img").height();
             // 生成图片所对应的所有属性
@@ -449,21 +542,21 @@
                 x: item.left - pos.x,
                 y: item.top - pos.y,
                 rotate: item.rotate,
-                icon_flag: 'test.png' // icon name
+                icon_flag: icon_name // icon name
             };
 
-            // let response = await request('/image', 'POST', data);
-            // if(response.code === 0) {
-            //     let final_base64 = response.data;
+            let response = await request('/image', 'POST', data);
+            if(response.code === 0) {
+                let final_base64 = response.data;
                 avator_bg_dom.setAttribute('style', 'display: none');
-                // let final_img_blob = b64toBlob(final_base64);
+                let final_img_blob = b64toBlob(final_base64);
                 // 展示final页面
-                // let child = document.createElement('img');
-                // child.width = 230;
-                // child.height = 230;
-                // child.setAttribute('src', getObjectURL(final_img_blob));
-                // final_avator_dom.appendChild(child);
-                // final_avator_dom.setAttribute('style', 'display: block');
+                let child = document.createElement('img');
+                child.width = 230;
+                child.height = 230;
+                child.setAttribute('src', getObjectURL(final_img_blob));
+                final_avator_dom.appendChild(child);
+                final_avator_dom.setAttribute('style', 'display: block');
 
                 document.getElementById('final-background').setAttribute('style', 'display: block');
                 document.getElementById('slide-div'). setAttribute('style', 'display: none');
@@ -471,10 +564,10 @@
                 document.getElementById('final-btn-group').setAttribute('style', 'display: flex');
                 document.getElementById('submit-btn').setAttribute('style', 'display: none');
 
-            // }else{
-            //     error
-                // alert(response.message);
-            // }
+            }else{
+                // error
+                alert(response.message);
+            }
         }
 
         /**
@@ -534,6 +627,43 @@
             }
 
             return new Blob(byteArrays, {type: contentType});
+        }
+
+        /**
+         * load imgs
+         */
+        function loadImgs() {
+            Object.keys(imgs).forEach( key => {
+                imgs[key].forEach( val => {
+                    let node = document.createElement('div');
+                    let child = document.createElement('img');
+                    let flag = false;
+                    if(Object.keys(val).indexOf('lock') !== -1 ) {
+                        if(grade < val.grade) {
+                            child.src = icon_base + val.lock;
+                            flag = true;
+                        }
+                    }
+                    if(!flag) {
+                        child.src = icon_base + val.name;
+                        node.setAttribute('onclick', `confirmTitle(this, '${val.name}')`);
+                    }
+                    node.appendChild(child);
+                    imgs_dom[key].push(node);
+                });
+            });
+            console.log(imgs_dom);
+        }
+
+        /**
+         * 展示tags对应icon内容
+         */
+        function display(val) {
+            let parent = document.getElementById('slide-div');
+            parent.innerHTML = '';
+            imgs_dom[val].forEach( val => {
+                parent.appendChild(val);
+            })
         }
     </script>
 </body>
