@@ -75,6 +75,14 @@
 			t--;
 			time.innerHTML=t;
 			if(t<=0||s<0){
+			    let resGrade = localStorage.getItem('maxGrade');
+			    if(String(resGrade) === 'null') {
+			        localStorage.setItem('maxGrade', s+500);
+                } else {
+			        if(parseInt(resGrade) < s+500) {
+                        localStorage.setItem('maxGrade', s+500);
+                    }
+				}
 				window.location.href="over.html";
 				clearInterval(next);
 			}	
