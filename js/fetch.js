@@ -2,8 +2,8 @@
   请求函数
  */
 
-let baseUrl = 'http://localhost/christmas/back_end/public/index/'; // TODO
-async function fetch(url = '', method = 'GET', data = {} ){
+let baseUrl = 'http://123.207.188.192:8080/'; // TODO
+async function request(url = '', method = 'GET', data = {} ){
     // method大写
     method = String(method).toUpperCase();
     // 地址拼接
