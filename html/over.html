@@ -79,7 +79,7 @@
 
     // 绑定submit Image
     document.getElementById('submit-btn').onclick = async () => {
-        const response = await fetch('/score', 'POST', {
+        const response = await request('/score', 'POST', {
             nickname,
             score: 123, // TODO
         });

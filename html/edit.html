@@ -6,33 +6,534 @@
     <title>头像编辑</title>
 </head>
 <style>
-    html,body{
-        background-image: url('../static/edit.jpg');
-        background-repeat: no-repeat;
-        background-size: contain;
+    html,body {
         width:100%;
         height:100%;
         margin:0;
         padding:0;
     }
+
+    body{
+        background-image: url('../static/edit.jpg');
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    #submit-btn {
+        position: absolute;
+        right: 20px;
+        top: 20px;
+        background: white;
+        font-size: 20px;
+        border-radius: 0.5em;
+        display: none;
+    }
+
     .window{
         position: relative;
         text-align: center;
-        top:20%;
-      }
-    .bg-pic{
-        width: 90%;
+        top: calc(28% + 3px);
+        padding-right: 3px;
     }
 
+    #bg-pic, #upload-img, #final-avator{
+        box-sizing: border-box;
+        width: 230px;
+        height: 230px;
+        border-radius: 1.1em;
+        margin: 0 auto;
+        overflow: hidden;
+    }
 
+    #bg-pic > img, #final-avator > img {
+        position: absolute;
+        width: 230px;
+        height: 230px;
+        margin-left: -115px;
+        border-radius: 1.1em;
+        z-index: -1;
+    }
+
+    .move {
+        position: fixed;
+        display: flex;
+        align-items: flex-start;
+        /*justify-content: flex-end;*/
+    }
+
+    #rotate-btn {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background: red;
+        z-index: 20;
+    }
+
+    #upload-img {
+        cursor: pointer;
+    }
+
+    #upload-img::before {
+        position: absolute;
+        content: '';
+        height: 70px;
+        width: 3px;
+        border-radius: 3px;
+        background: #3b4e9e;
+        margin: 65px 0 0 114px;
+    }
+
+    #upload-img::after {
+        position: absolute;
+        content: '';
+        width: 70px;
+        height: 3px;
+        border-radius: 3px;
+        background: #3b4e9e;
+        margin: 99px 0 0 -148px;
+    }
+
+    #upload-img > span {
+        display: inline-block;
+        position: absolute;
+        top: 150px;
+        left: 168px;
+        color: #3b4e9e;
+        font-size: 19px;
+        font-weight: bold;
+    }
+
+    #upload-img > input {
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .slide {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        bottom: 0;
+        width: 100%;
+        height: 180px;
+        overflow-x: scroll;
+    }
+
+    .slide > div {
+        flex-shrink: 0;
+        width: 110px;
+        height: 110px;
+        background: rgba(59, 79, 159, 0.7);
+        border-radius: 100%;
+        border: none;
+        overflow: hidden;
+        cursor: pointer;
+        margin: 0 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .slide > div > img {
+        width: 100px;
+        height: 100px;
+        cursor: pointer;
+    }
+
+    .tags {
+        position: absolute;
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        bottom: 200px;
+    }
+
+    .tags > div  {
+        width: 30%;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position-x: center;
+    }
+
+    #final-background {
+        position: fixed;
+        display: none;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        background-image: url("../static/bg.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    #final-avator {
+        position: fixed;
+        top: 200px;
+    }
+
+    #final-avator > img {
+        border: 5px solid rgb(157,170,225);
+    }
+
+    #final-btn-group {
+        position: fixed;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        bottom: 50px;
+        width: 100%;
+    }
+
+    #final-btn-group > img {
+        margin: 10px auto;
+    }
+
+    /* tags imgs */
+
+    .elk-none {
+        background-image: url("../static/elk-none.png");
+    }
+    .elk-active {
+        background-image: url("../static/elk-active.png");
+    }
+
+    .hat-none {
+        background-image: url("../static/hat-none.png");
+    }
+    .hat-active {
+        background-image: url("../static/hat-active.png");
+    }
+
+    .oji-none {
+        background-image: url("../static/ojichyan-none.png");
+    }
+    .oji-active {
+        background-image: url("../static/ojichyan-active.png");
+    }
 </style>
 <body>
+    <div id="final-background"></div>
+    <button id="submit-btn" onclick="submitImg()">Test</button>
     <div class="window">
-    
-    
+        <div id="upload-img">
+            <input id="upload-input" type="file" accept="image/*">
+            <span>选择头像</span>
+        </div>
+        <div id="bg-pic" style="display: none"></div>
+        <div id="final-avator" style="display: none"></div>
+    </div>
+    <div class="tags" id="tags-div">
+        <div id="hat" class="hat-active" onclick="changeTagActive('hat')"></div>
+        <div id="elk" class="elk-none" onclick="changeTagActive('elk')"></div>
+        <div id="oji" class="oji-none" onclick="changeTagActive('oji')"></div>
+    </div>
+    <div class="slide" id="slide-div">
+        <div onclick="confirmTitle(this)">
+            <img src="../static/test.png" alt="test">
+        </div>
+        <div onclick="confirmTitle(this)">
+            <img src="../static/test.png" alt="test">
+        </div>
+        <div onclick="confirmTitle(this)">
+            <img src="../static/test.png" alt="test">
+        </div>
+        <div onclick="confirmTitle(this)">
+            <img src="../static/test.png" alt="test">
+        </div>
+        <div onclick="confirmTitle(this)">
+            <img src="../static/test.png" alt="test">
+        </div>
+        <div onclick="confirmTitle(this)">
+            <img src="../static/test.png" alt="test">
+        </div>
+    </div>
+    <div id="final-btn-group">
+        <img src="../static/save.png" width="230">
+        <img src="../static/final-again.png" width="230">
     </div>
 
-<script>
+    <script src="../js/fetch.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        let tags_dom = {
+            elk: null,
+            hat: null,
+            oji: null
+        };
+        let active_tag = 'hat';
+        let upload_hint_dom = null,
+            avator_bg_dom = null,
+            final_avator_dom = null;
 
-</script>
+        let bg_file = null;
+        let itemDom = null;
+        let item = {};
+        const ROTATE_ICON =
+            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA70lEQVQ4T7XTL0vDURTG8c80aJVhEWx2u2AyTYNonmAwGi2Cgth8AWNBgzYZLKmwMJhYLL4Io9hFDP7hyJ2My+/nlLHTzj3P/d5znntvxYhRGXG/sQGWsI1nfGIGD7hI+U/jRR0c4QmneE/KSRxgFruDY+eAFSwjIEVxgkc0+8UccIcaXkoAE7hJmm/JIKCKM2wMuZku1vCWA6bQwvoQQAer+MgBkfdS8TWDzGMTDVyVjRB7trCIvQwQa3VMo43bMhPDk2MsYD85HtoAXOMch79dY78WRsaJc9hJD+oS8R4iAn5f5MG/v8bY/sKfO/kCL2skEWR80iIAAAAASUVORK5CYII=';
+
+        window.onload = () => {
+            // init
+            tags_dom.elk = document.getElementById('elk');
+            tags_dom.hat = document.getElementById('hat');
+            tags_dom.oji = document.getElementById('oji');
+            upload_hint_dom = document.getElementById('upload-img');
+            avator_bg_dom = document.getElementById('bg-pic');
+            final_avator_dom = document.getElementById('final-avator');
+            // 绑定上传头像事件
+            document.getElementById('upload-input').onchange = img => {
+                bg_file = img.target.files[0];
+                // 展示编辑区域
+                let url = getObjectURL(img.target.files[0]);
+                upload_hint_dom.setAttribute('style', 'display: none');
+                avator_bg_dom.setAttribute('style', `display: block`);
+                // 导入背景
+                let child = document.createElement('img');
+                child.setAttribute('src', url);
+                child.setAttribute('id', 'target-bg');
+                avator_bg_dom.appendChild(child);
+            };
+        };
+
+        /* 切换标签 */
+        function changeTagActive(tag) {
+            if(active_tag === tag) return;
+            tags_dom[active_tag].setAttribute('class', `${active_tag}-none`);
+            tags_dom[tag].setAttribute('class', `${tag}-active`);
+            // TODO change slide content
+            active_tag = tag;
+        }
+
+        /**
+         * 获取文件的url
+         * @param file
+         * @returns {*}
+         */
+        function getObjectURL(file) {
+            let url = null ;
+            if (window.createObjectURL!=undefined) { // basic
+                url = window.createObjectURL(file) ;
+            } else if (window.URL!=undefined) { // mozilla(firefox)
+                url = window.URL.createObjectURL(file) ;
+            } else if (window.webkitURL!=undefined) { // webkit or chrome
+                url = window.webkitURL.createObjectURL(file) ;
+            }
+            return url ;
+        }
+
+        /* 点击生成图片的函数 */
+        function confirmTitle(my) {
+            if(bg_file===null)return;
+            // 删除之前的贴纸
+            if(itemDom!==null) document.getElementById('bg-pic').removeChild(itemDom);
+            else document.getElementById('submit-btn').setAttribute('style', 'display: block');
+            //初始化定位
+            let left = ($(window).width() - 209) / 2,
+                top = ($(window).height() - 209) / 2;
+
+            let elelayer = $(`<span id="target" class="move"></span>`).appendTo(".window #bg-pic");
+            let src = $(my)[0].children[0].src;
+            $('<img/>').attr({
+                id: 'target-img',
+                src: src,
+                width: 70,
+                height: 70
+            }).appendTo(elelayer);
+            $(`<img id="rotate-btn" src="${ROTATE_ICON}">`).appendTo(elelayer);
+            let widthOrg = elelayer.find("img").width(),
+                heightOrg = elelayer.find("img").height();
+            // 生成图片所对应的所有属性
+            let data = {
+                // id: increaseId, //自增id
+                width: widthOrg,//宽度
+                height: heightOrg,//高度
+                tx: 0, //move触摸点
+                ty: 0,
+                _tx: 0, //触摸距离
+                _ty: 0,
+                rx: 0, //rotate触摸点
+                ry: 0,
+                _rx: 0, //触摸距离
+                _ry: 0,
+                disPtoO: 0, //触摸点到圆心的距离
+                scale: 1, //缩放比例
+                left: left,
+                top: top,
+                anglePre: 0, //角度
+                angleNext: 0,
+                rotate: 0, //计算得出真正的旋转角度
+                ox: left + widthOrg / 2, //圆心坐标
+                oy: top + heightOrg / 2,
+                r: Math.sqrt(widthOrg * widthOrg + heightOrg * heightOrg) / 2 //对角线的半
+            };
+            itemDom = document.getElementById('target');
+            item = data;
+
+            // 绑定事件
+            document.getElementById('target-img').ontouchstart = e => {
+                let posx = e.targetTouches[0].clientX,
+                    posy = e.targetTouches[0].clientY;
+                item.tx = posx;
+                item.ty = posy;
+            };
+            document.getElementById('target-img').ontouchmove = e => {
+                let posx = e.targetTouches[0].clientX,
+                    posy = e.targetTouches[0].clientY;
+                item._tx = posx - item.tx;
+                item._ty = posy - item.ty;
+                item.left += item._tx;
+                item.top += item._ty;
+                // TODO 限制位置
+                itemDom.style.left = `${item.left}px`;
+                itemDom.style.top = `${item.top}px`;
+                item.ox = item.left + item.width /2;
+                item.oy = item.top + item.height /2;
+                item.tx = posx;
+                item.ty = posy;
+            };
+            document.getElementById('rotate-btn').ontouchstart = e => {
+                let posx = e.targetTouches[0].clientX,
+                    posy = e.targetTouches[0].clientY;
+                // e.preventDefault();
+                item.rx = posx;
+                item.ry = posy;
+                item.anglePre = getAngle(item.ox, item.oy, posx, posy);
+            };
+            document.getElementById('rotate-btn').ontouchmove = e => {
+                let posx = e.targetTouches[0].clientX,
+                    posy = e.targetTouches[0].clientY;
+                // e.preventDefault();
+                item.disPtoO = getDistancs(item.ox, item.oy, posx, posy);
+                item.scale = (item.disPtoO / item.r).toFixed(2);
+                item.angleNext = getAngle(item.ox, item.oy, posx, posy);
+                item.rotate += item.angleNext - item.anglePre;
+                // $('#target').css({
+                //     scale: item.scale,
+                //     rotate: item.rotate
+                // });
+                itemDom.style.transform = `scale(${item.scale}) rotate(${item.rotate}deg)`;
+                document.getElementById('rotate-btn').setAttribute('style', `transform: scale(${1/item.scale})`);
+                item.anglePre = item.angleNext;
+            };
+        }
+
+        /* 获取角度 */
+        function getAngle(px, py, mx, my) {
+            let x = px - mx;
+            let y = py - my;
+            let angle = Math.atan2(y, x) * 360 / Math.PI;
+            return angle;
+        }
+
+        /* 获取距离 */
+        function getDistancs(cx, cy, pointer_x, pointer_y) {
+            let ox = pointer_x - cx;
+            let oy = pointer_y - cy;
+            return Math.sqrt(
+                ox * ox + oy * oy
+            );
+        }
+
+        /**
+         * 请求图片处理接口
+         **/
+        async function submitImg() {
+            let pos = getElementPosition(document.getElementById('target-bg'));
+
+            let data = {
+                src_image: getBase64Image(bg_file), // bg base64
+                width: item.width * item.scale,
+                height: item.height * item.scale,
+                x: item.left - pos.x,
+                y: item.top - pos.y,
+                rotate: item.rotate,
+                icon_flag: 'test.png' // icon name
+            };
+
+            // let response = await request('/image', 'POST', data);
+            // if(response.code === 0) {
+            //     let final_base64 = response.data;
+                avator_bg_dom.setAttribute('style', 'display: none');
+                // let final_img_blob = b64toBlob(final_base64);
+                // 展示final页面
+                // let child = document.createElement('img');
+                // child.width = 230;
+                // child.height = 230;
+                // child.setAttribute('src', getObjectURL(final_img_blob));
+                // final_avator_dom.appendChild(child);
+                // final_avator_dom.setAttribute('style', 'display: block');
+
+                document.getElementById('final-background').setAttribute('style', 'display: block');
+                document.getElementById('slide-div'). setAttribute('style', 'display: none');
+                document.getElementById('tags-div'). setAttribute('style', 'display: none');
+                document.getElementById('final-btn-group').setAttribute('style', 'display: flex');
+                document.getElementById('submit-btn').setAttribute('style', 'display: none');
+
+            // }else{
+            //     error
+                // alert(response.message);
+            // }
+        }
+
+        /**
+         * 获取DOM元素的position{x,y}
+         **/
+        function getElementPosition(e) {
+            let x = 0, y = 0;
+            while (e != null) {
+                x += e.offsetLeft;
+                y += e.offsetTop;
+                e = e.offsetParent;
+            }
+            return { x: x, y: y };
+        }
+
+        /**
+         * img_file to BASE64
+         * @param img
+         * @returns {string}
+         */
+        function getBase64Image(img) {
+            let img_file = new Image(img);
+            let canvas = document.createElement("canvas");
+            canvas.width = 230;
+            canvas.height = 230;
+
+            let ctx = canvas.getContext("2d");
+            ctx.drawImage(img_file, 0, 0, 230, 230);
+            return canvas.toDataURL();
+        }
+
+        /**
+         * base64 to imgBlob
+         * @param b64Data
+         * @param contentType
+         * @param sliceSize
+         * @returns {Blob}
+         */
+        function b64toBlob(b64Data, contentType, sliceSize) {
+            contentType = contentType || '';
+            sliceSize = sliceSize || 512;
+
+            let byteCharacters = atob(b64Data);
+            let byteArrays = [];
+
+            for(let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+                let slice = byteCharacters.slice(offset, offset + sliceSize);
+
+                let byteNumbers = new Array(slice.length);
+                for(let i = 0; i < slice.length; i++) {
+                    byteNumbers[i] = slice.charCodeAt(i);
+                }
+
+                let byteArray = new Uint8Array(byteNumbers);
+
+                byteArrays.push(byteArray);
+            }
+
+            return new Blob(byteArrays, {type: contentType});
+        }
+    </script>
 </body>
