@@ -21,9 +21,9 @@
 
     #back-btn {
         position: absolute;
-        top: 20px;
+        top: 30px;
         left: 20px;
-        width: 31px;
+        width: 21px;
         height: 21px;
     }
 
@@ -235,7 +235,7 @@
 <body>
     <div id="final-background"></div>
     <button id="back-btn" onclick="window.go(-1)">
-        <img src="../static/back-icon.png" width="30" height="30">
+        <img src="../static/back-icon.png" height="20">
     </button>
     <button id="submit-btn" onclick="submitImg()">完成</button>
     <div class="window">
@@ -358,8 +358,6 @@
         let bg_file = null;
         let itemDom = null;
         let item = {};
-        const ROTATE_ICON =
-            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA70lEQVQ4T7XTL0vDURTG8c80aJVhEWx2u2AyTYNonmAwGi2Cgth8AWNBgzYZLKmwMJhYLL4Io9hFDP7hyJ2My+/nlLHTzj3P/d5znntvxYhRGXG/sQGWsI1nfGIGD7hI+U/jRR0c4QmneE/KSRxgFruDY+eAFSwjIEVxgkc0+8UccIcaXkoAE7hJmm/JIKCKM2wMuZku1vCWA6bQwvoQQAer+MgBkfdS8TWDzGMTDVyVjRB7trCIvQwQa3VMo43bMhPDk2MsYD85HtoAXOMch79dY78WRsaJc9hJD+oS8R4iAn5f5MG/v8bY/sKfO/kCL2skEWR80iIAAAAASUVORK5CYII=';
 
         window.onload = () => {
             // init
@@ -537,10 +535,10 @@
 
             let data = {
                 src_image: getBase64Image(bg_file), // bg base64
-                width: item.width * item.scale,
-                height: item.height * item.scale,
-                x: item.left - pos.x,
-                y: item.top - pos.y,
+                width: parseInt(item.width * item.scale),
+                height: parseInt(item.height * item.scale),
+                x: parseInt(item.left - pos.x),
+                y: parseInt(item.top - pos.y),
                 rotate: item.rotate,
                 icon_flag: icon_name // icon name
             };
