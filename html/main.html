@@ -10,25 +10,25 @@
 
 	<div id='app'></div>
 	<div id='recv' class='recv'></div>
-				<div class="console">
-					<div class="add">
-					<div class="score">
-						得分：
-						<span id="score">0</span>
-					</div>
-					<!--
-					<div class="drop">
-						掉落：
-						<span id="drop">0</span>
-					</div>-->
-					</div>
-
-					<div class="level">LV
-						<span id="level">1</span>
-					</div>
-					<div class="time">
-                     30
-					</div>
+	<div class="console">
+		<div class="add">
+			<div class="score">
+				得分：
+				<span id="score">0</span>
+			</div>
+			<!--
+				<div class="drop">
+					掉落：
+					<span id="drop">0</span>
+				</div>-->
+		</div>
+		<div class="level">LV
+			<span id="level">1</span>
+		</div>
+		<div class="time">
+			30
+		</div>
+	</div>
 
 <script src="..\js\fall.js" type="text/javascript"></script>
 <script src="..\js\main.js" type="text/javascript"></script>
@@ -54,10 +54,11 @@
 		time.innerHTML=t;
 		if(t<=0&&s<50||s<0)
 		{
-		window.location.href="over.html";
-		clearInterval(start);
+		    saveGrade();
+			window.location.href="over.html";
+			clearInterval(start);
 		}
-		else if(t<=0&&s>=50)
+		else if(t<=0&&s>=100)
 		{
 			showAlert('恭喜，进入第二关！');
 			let l=2;
@@ -65,8 +66,7 @@
 			level.innerHTML=l;
 			clearInterval(start);
 			clearInterval(id);
-			setInterval(()=>
-			{
+			setInterval(()=> {
 				gameController.gen(1000, kinds[~~(Math.random()*5)]);
 			},900);
 			t=30;
@@ -75,16 +75,8 @@
 			t--;
 			time.innerHTML=t;
 			if(t<=0&&s<500||s<0){
-			  let resGrade = localStorage.getItem('maxGrade');
-		    if(String(resGrade) === 'null') {
-			    localStorage.setItem('maxGrade', s+500);
-        } else {
-	        if(parseInt(resGrade) < s+500) {
-            localStorage.setItem('maxGrade', s+500);
-          }
-				}
-				window.location.href="over.html";
-				clearInterval(next);
+			    saveGrade();
+				window.location.href="over.html";clearInterval(next);
 			}
 			else if(t<=0&&s>=500)
 			{
@@ -104,8 +96,9 @@
 				t--;
 				time.innerHTML=t;
 			    if(t<=0||s<0){
-				window.location.href="over.html";
-				clearInterval(next);
+                    saveGrade();
+					window.location.href="over.html";
+					clearInterval(next);
 			    }					
 			},1000)
 			}
@@ -113,6 +106,18 @@
 
 		}
 	},1000);
+
+	function saveGrade() {
+        let resGrade = localStorage.getItem('maxGrade');
+        if(String(resGrade) === 'null') {
+            localStorage.setItem('maxGrade', s+500);
+        } else {
+            localStorage.setItem('grade', s+500);
+            if(parseInt(resGrade) < s+500) {
+                localStorage.setItem('maxGrade', s+500);
+            }
+        }
+	}
 
 
 //下落节点记录
