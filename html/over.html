@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>游戏结束</title>
@@ -74,35 +75,62 @@
 </style>
 <body>
     <div class="window">
-    <image class="bg-pic"src="../static/window_grade.png"></image>
-    <image class="feima" src="../static/stop.png"></image>
-    <h2>游戏结束</h2>
-    <div class="nickname">
-        <input type="text" id="nickname" placeholder="请输入您的昵称">
-    </div>
+        <image class="bg-pic"src="../static/window_grade.png"></image>
+        <image class="feima" src="../static/stop.png"></image>
+        <h2>游戏结束</h2>
+        <div class="nickname">
+            <input type="text" id="nickname" placeholder="请输入您的昵称">
+        </div>
         <image class="confirm" src="../static/confirm.png" id="submit-btn"></image>
         <image class="retry" src="../static/retry.png" id="retry-btn" onclick="window.location.href='main.html'"></image>
     </div>
-<script src="../js/fetch.js" type="text/javascript"></script>
+    <script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.min.js"></script>
+    <script src="../js/fetch.js" type="text/javascript"></script>
 <script>
+
 
     let nickname = '';
     let input=document.getElementById('nickname');
     input.oninput=input.onpropertychange=function(){
-        nickname=this.value;
-       // console.log(name);
+        if(this.value === 'null') nickname='Null';
+        else nickname=this.value;
+    };
+
+    window.onload = () => {
+        if(String(localStorage.getItem('upload_key'))!=='null') {
+            document.getElementById('nickname').setAttribute('style', 'display: none;');
+        }
+        let level = localStorage.getItem('level');
+        if(String(level)!=='null') {
+            count(level);
+            localStorage.removeItem('level');
+        }
     };
 
     // 绑定submit Image
     document.getElementById('submit-btn').onclick = async () => {
         let grade = parseInt(localStorage.getItem('grade'));
-        const response = await request('/score', 'POST', {
+        let resname = localStorage.getItem('nickname');
+        if(String(resname) === 'null') {
+            localStorage.setItem('nickname', nickname);
+        }else{
+            nickname = String(resname);
+        }
+        const pkey = 'j&@09D)';
+        let request_data = {
             nickname,
-            score: grade, // TODO
-        });
+            score: grade,
+            check: md5(grade+pkey)
+        };
+        let key = localStorage.getItem('upload_key');
+        if(String(key) !== 'null') {
+            request_data['upload_key'] = key;
+        }
+        const response = await request('/score', 'POST', request_data);
         if(response.code === 0) {
             // success
-            window.location.href='avatar.html'
+            window.location.href='avatar.html';
+            localStorage.setItem('upload_key', response.data.user_info.upload_key);
         }else{
             // error
             alert(response.message);

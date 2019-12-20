@@ -37,6 +37,7 @@ var startIndex,endIndex,touchIndex,tranX;
 //触摸移动
 
     drag.ontouchmove=evt=>{
+        evt.preventDefault();
         let appWidth = body.clientWidth;
         let touch = evt.targetTouches[0];
             drag.style.left=`${touch.clientX}px`;
