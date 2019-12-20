@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<title>圣诞礼物</title>
@@ -48,20 +49,18 @@
 
 	var t=30;
 	var time=document.getElementsByClassName("time")[0];
+	var start = null,
+		next = null,
+		next2 = null;
 
-	var start=setInterval(()=>{
+	start=setInterval(()=>{
 		t--;
 		time.innerHTML=t;
-		if(t<=0&&s<50||s<0)
-		{
-		    saveGrade();
-			window.location.href="over.html";
-			clearInterval(start);
-		}
-		else if(t<=0&&s>=100)
-		{
+        localStorage.setItem('level','1');
+        if(t<=0&&s>=100) {
 			showAlert('恭喜，进入第二关！');
-			let l=2;
+            localStorage.setItem('level','2');
+            let l=2;
 			let level=document.getElementById("level");
 			level.innerHTML=l;
 			clearInterval(start);
@@ -71,37 +70,27 @@
 			},900);
 			t=30;
 
-			var next=setInterval(()=>{
-			t--;
-			time.innerHTML=t;
-			if(t<=0&&s<500||s<0){
-			    saveGrade();
-				window.location.href="over.html";clearInterval(next);
-			}
-			else if(t<=0&&s>=500)
-			{
-				showAlert("恭喜，进入第三关！");
-				let l=3;
-				let level=document.getElementById("level");
-				level.innerHTML=l;
-				clearInterval(start);
-				clearInterval(id);
-				setInterval(()=>
-				{
-					gameController.gen(1000, kinds[~~(Math.random()*5)]);
-				},800);
-				t=30;
-
-				var next=setInterval(()=>{
+			next=setInterval(()=>{
 				t--;
 				time.innerHTML=t;
-			    if(t<=0||s<0){
-                    saveGrade();
-					window.location.href="over.html";
-					clearInterval(next);
-			    }					
-			},1000)
-			}
+				if(t<=0&&s>=500) {
+					showAlert("恭喜，进入第三关！");
+					localStorage.setItem('level','3');
+					let l=3;
+					let level=document.getElementById("level");
+					level.innerHTML=l;
+					clearInterval(start);
+					clearInterval(id);
+					setInterval(()=> {
+						gameController.gen(1000, kinds[~~(Math.random()*5)]);
+					},800);
+					t=30;
+
+					next2=setInterval(()=>{
+						t--;
+						time.innerHTML=t;
+					},1000)
+				}
 			},1000);
 
 		}
@@ -110,11 +99,11 @@
 	function saveGrade() {
         let resGrade = localStorage.getItem('maxGrade');
         if(String(resGrade) === 'null') {
-            localStorage.setItem('maxGrade', s+500);
+            localStorage.setItem('maxGrade', s);
         } else {
-            localStorage.setItem('grade', s+500);
-            if(parseInt(resGrade) < s+500) {
-                localStorage.setItem('maxGrade', s+500);
+            localStorage.setItem('grade', s);
+            if(parseInt(resGrade) < s) {
+                localStorage.setItem('maxGrade', s);
             }
         }
 	}
@@ -147,16 +136,25 @@
 	let backDom = document.getElementById('app');
 	window.onload = () => {
 		backDom.addEventListener('receive', e => {
-			add(e);
+		    if(e.detail.score===-500) {
+                saveGrade();
+                window.location.href="over.html";
+                if(start!==null)clearInterval(start);
+                if(next!==null)clearInterval(next);
+                if(next2!==null)clearInterval(next2);
+			}else{
+                add(e);
+            }
 		});
-	}
+	};
 	
 	let gameController = new gameLogic();
 	gameController.init(backDom, document.getElementById('recv'));
 	console.log(gameController.test());
 	console.log(gameController);
 	let id = setInterval( () => {
-		gameController.gen(1500, kinds[~~(Math.random()*5)]);
+        let swi = ~~(~~(Math.random()*41)/10);
+		gameController.gen(1500, kinds[swi]);
 	},1000);
 
 </script>

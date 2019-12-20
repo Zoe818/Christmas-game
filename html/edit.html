@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>头像编辑</title>
@@ -33,6 +34,8 @@
         left: 20px;
         width: 21px;
         height: 21px;
+        background: none;
+        border: none;
     }
 
     #submit-btn {
@@ -47,6 +50,17 @@
         font-weight: bold;
         color: #3b4e9e;
         display: none;
+    }
+
+    .upload-hide {
+        position: fixed;
+        z-index: 2;
+        box-sizing: border-box;
+        margin-left: -100px;
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+        border: none;
     }
 
     .window{
@@ -79,6 +93,7 @@
         position: fixed;
         display: flex;
         align-items: flex-start;
+        z-index: 3;
         /*justify-content: flex-end;*/
     }
 
@@ -229,6 +244,19 @@
 
     #final-btn-group > img {
         margin: 10px auto;
+    }
+
+    .loading {
+        display: inline-block;
+        position: fixed;
+        font-size: 20px;
+        height: 30px;
+        width: 100px;
+        color: white;
+        font-weight: bold;
+        top: calc(20% - 15px);
+        left: calc(50% - 50px);
+        z-index: 100;
     }
 
     /* tags imgs */
@@ -409,6 +437,12 @@
                 child.setAttribute('id', 'target-bg');
                 bg_file = child;
                 avator_bg_dom.appendChild(child);
+                let upload_dom = document.createElement('input');
+                upload_dom.setAttribute('class', 'upload-hide');
+                upload_dom.onchange = ev => changeImage(ev);
+                upload_dom.setAttribute('type', 'file');
+                upload_dom.setAttribute('accept', 'image/*');
+                avator_bg_dom.appendChild(upload_dom);
             };
         };
 
@@ -569,7 +603,10 @@
                 rotate: parseInt(item.rotate),
                 icon_flag: icon_name // icon name
             };
-
+            let loading = document.createElement('span');
+            loading.innerHTML = 'Loading...';
+            loading.setAttribute('class', 'loading');
+            document.body.appendChild(loading);
             let response = await request('/image', 'POST', data);
             if(response.code === 0) {
                 final_base64 = response.data;
@@ -593,6 +630,7 @@
                 // error
                 alert(response.message);
             }
+            document.body.removeChild(loading);
         }
 
         /**
@@ -670,6 +708,11 @@
             e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
             a.dispatchEvent(e);
             URL.revokeObjectURL(url);
+        }
+
+        function changeImage(evt) {
+            let file = evt.target.files[0];
+            document.getElementById('target-bg').src = getObjectURL(file);
         }
     </script>
 </body>

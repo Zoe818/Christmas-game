@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <head>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>排行榜</title>
 </head>
 
 <style>
+    html, body, #app, .wx-pages {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+
     html,body{
         width: 100%;
         height: 100%;

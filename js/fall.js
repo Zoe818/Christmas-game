@@ -19,7 +19,7 @@ let gameLogic = function() {
 			recver = recvObj;
 			appWidth = obj.clientWidth;
 			appHeight = obj.clientHeight;
-			console.log('appHeight'+appHeight);
+			// console.log('appHeight'+appHeight);
 		}
 
 		/**
@@ -57,7 +57,7 @@ let gameLogic = function() {
 			let timerId = setTimeout( () => {
 				let recvX = recver.offsetLeft;
 				if(x+phantom>=recvX && x<=recvX+phantom) {
-					console.log(type);
+					// console.log(type);
 					dom.dispatchEvent(new CustomEvent('receive',{
 						detail: {
 							score: type
