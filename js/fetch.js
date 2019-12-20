@@ -2,7 +2,7 @@
   请求函数
  */
 
-let baseUrl = 'http://123.207.188.192:8080/'; // TODO
+let baseUrl = 'https://hackday.itoken.team/api/christmas2019/'; // TODO
 async function request(url = '', method = 'GET', data = {} ){
     // method大写
     method = String(method).toUpperCase();

@@ -34,6 +34,8 @@
         left: 20px;
         width: 21px;
         height: 21px;
+        background: none;
+        border: none;
     }
 
     #submit-btn {
@@ -48,6 +50,17 @@
         font-weight: bold;
         color: #3b4e9e;
         display: none;
+    }
+
+    .upload-hide {
+        position: fixed;
+        z-index: 2;
+        box-sizing: border-box;
+        margin-left: -100px;
+        width: 200px;
+        height: 200px;
+        opacity: 0;
+        border: none;
     }
 
     .window{
@@ -80,6 +93,7 @@
         position: fixed;
         display: flex;
         align-items: flex-start;
+        z-index: 3;
         /*justify-content: flex-end;*/
     }
 
@@ -410,6 +424,12 @@
                 child.setAttribute('id', 'target-bg');
                 bg_file = child;
                 avator_bg_dom.appendChild(child);
+                let upload_dom = document.createElement('input');
+                upload_dom.setAttribute('class', 'upload-hide');
+                upload_dom.onchange = ev => changeImage(ev);
+                upload_dom.setAttribute('type', 'file');
+                upload_dom.setAttribute('accept', 'image/*');
+                avator_bg_dom.appendChild(upload_dom);
             };
         };
 
@@ -671,6 +691,11 @@
             e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
             a.dispatchEvent(e);
             URL.revokeObjectURL(url);
+        }
+
+        function changeImage(evt) {
+            let file = evt.target.files[0];
+            document.getElementById('target-bg').src = getObjectURL(file);
         }
     </script>
 </body>
