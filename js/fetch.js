@@ -72,7 +72,7 @@ function count(type) {
     //     case 'level3': // 第三关
     //         break;
     // }
-    const key = 'wo xian sui bian xie';
+    const key = 'j&@09D)';
     for(let i=0;i<parseInt(type);i++) {
         request('/data', 'GET', {
             data: 'level'+type,
