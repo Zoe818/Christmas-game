@@ -90,20 +90,39 @@
     let nickname = '';
     let input=document.getElementById('nickname');
     input.oninput=input.onpropertychange=function(){
-        nickname=this.value;
+        if(this.value === 'null') nickname='Null';
+        else nickname=this.value;
        // console.log(name);
+    };
+
+    window.onload = () => {
+        if(String(localStorage.getItem('upload_key'))!=='null') {
+            document.getElementById('nickname').setAttribute('style', 'display: none;');
+        }
     };
 
     // 绑定submit Image
     document.getElementById('submit-btn').onclick = async () => {
         let grade = parseInt(localStorage.getItem('grade'));
-        const response = await request('/score', 'POST', {
+        let resname = localStorage.getItem('nickname');
+        if(String(resname) === 'null') {
+            localStorage.setItem('nickname', nickname);
+        }else{
+            nickname = String(resname);
+        }
+        let request_data = {
             nickname,
-            score: grade, // TODO
-        });
+            score: grade
+        };
+        let key = localStorage.getItem('upload_key');
+        if(String(key) !== 'null') {
+            request_data['upload_key'] = key;
+        }
+        const response = await request('/score', 'POST', request_data);
         if(response.code === 0) {
             // success
-            window.location.href='avatar.html'
+            window.location.href='avatar.html';
+            localStorage.setItem('upload_key', response.data.user_info.upload_key);
         }else{
             // error
             alert(response.message);
