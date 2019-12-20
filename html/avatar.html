@@ -68,7 +68,7 @@
 <body>
     <div class="window">
     <image class="bg-pic"src="../static/window_grade.png"></image>
-    <h2 id="nicknames">{{data.nickname}}</h2>
+    <h2 id="nicknames"></h2>
     <p>快为自己的头像带上圣诞帽吧！</p>
 
         <image class="confirm" src="../static/edit.png" onclick="window.location.href='edit.html'"></image>
@@ -76,6 +76,11 @@
     </div>
 
 <script>
-
+    window.onload = () => {
+        let nickname = localStorage.getItem('nickname');
+        if(String(nickname) !== 'null') {
+            document.getElementById('nicknames').innerText = nickname;
+        }
+    }
 </script>
 </body>

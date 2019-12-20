@@ -34,7 +34,6 @@
         position: absolute;
         top: 30px;
         left: 20px;
-        width: 21px;
         height: 21px;
         background: none;
         border: none;
@@ -386,6 +385,7 @@
             var cas = $('#tailoringImg').cropper('getCroppedCanvas');//获取被裁剪后的canvas
             var base64url = cas.toDataURL('image/png'); 
             $("#final-img").prop("src",base64url);
+            bg_file = document.getElementById('final-img');
             closeTailor();
         }
     });
@@ -554,21 +554,21 @@
         function confirmTitle(my, iconName) {
             if(bg_file===null)return;
             // 删除之前的贴纸
-            if(itemDom!==null) document.getElementById('bg-pic').removeChild(itemDom);
+            if(itemDom!==null) document.getElementById('upload-img').removeChild(itemDom);
             else document.getElementById('submit-btn').setAttribute('style', 'display: block');
 
             icon_name = iconName;
             //初始化定位
-            let left = ($(window).width() - 209) / 2,
-                top = ($(window).height() - 209) / 2;
+            let left = ($(window).width() - 70) / 2,
+                top = ($(window).height() - 70) / 2;
 
-            let elelayer = $(`<span id="target" class="move"></span>`).appendTo(".window #bg-pic");
+            let elelayer = $(`<span id="target" class="move" style="left: ${left}px; top: ${top}px;"></span>`).appendTo(".window #upload-img");
             let src = $(my)[0].children[0].src;
             $('<img/>').attr({
                 id: 'target-img',
                 src: src,
                 width: 70,
-                height: 70
+                height: 70,
             }).appendTo(elelayer);
             $(`<img id="rotate-btn" src="../static/turn.png">`).appendTo(elelayer);
             let widthOrg = elelayer.find("img").width(),
@@ -669,7 +669,7 @@
          * 请求图片处理接口
          **/
         async function submitImg() {
-            let pos = getElementPosition(document.getElementById('target-bg'));
+            let pos = getElementPosition(document.getElementById('final-img'));
 
             let data = {
                 src_image: getBase64Image(bg_file), // bg base64
@@ -687,7 +687,7 @@
             let response = await request('/image', 'POST', data);
             if(response.code === 0) {
                 final_base64 = response.data;
-                avator_bg_dom.setAttribute('style', 'display: none');
+                document.getElementById('upload-img').setAttribute('style', 'display: none');
                 // 展示final页面
                 let child = document.createElement('img');
                 child.setAttribute('id', 'final-img-save');
