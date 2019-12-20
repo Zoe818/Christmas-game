@@ -25,6 +25,7 @@
         hide: function(){
             this.alert.style.display = this.mask.style.display = 'none';
             exports.event && (exports.event.stopPropagation(), exports.event.preventDefault());
+            exports
         },
         initEvents: function(){
             this.hideHandler = this.hideHandler || this.hide.bind(this);
