@@ -130,7 +130,9 @@
         if(response.code === 0) {
             // success
             window.location.href='avatar.html';
-            localStorage.setItem('upload_key', response.data.user_info.upload_key);
+            if(String(key) !== 'null') {
+                localStorage.setItem('upload_key', response.data.user_info.upload_key);
+            }
         }else{
             // error
             alert(response.message);
