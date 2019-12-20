@@ -358,8 +358,6 @@
             var cas = $('#tailoringImg').cropper('getCroppedCanvas');//获取被裁剪后的canvas
             var base64url = cas.toDataURL('image/png'); 
             $("#final-img").prop("src",base64url);
-
-            //关闭裁剪框
             closeTailor();
         }
     });
@@ -367,7 +365,6 @@
     function closeTailor() {
         $(".tailoring-container").toggle();
     }
-
 
 
         let grade = 0;
