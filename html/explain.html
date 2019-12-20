@@ -34,10 +34,35 @@ html,body{
     left:0;
     right:0;
 }
+
+#back-btn {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    width: 21px;
+    height: 21px;
+    background: none;
+    border: none;
+}
 </style>
 
 <body>
+<button id="back-btn" onclick="window.location.href = 'first.html'">
+    <img src="../static/back-icon.png" height="20">
+</button>
 <image class="explain" src="../static/word.png"></image>
-<image class="btn" src='../static/start.png' onclick="window.location.href='main.html'"></button>
+<image class="btn" src='../static/start.png' onclick="window.location.href='main.html'"></image>
+<button style="opacity: 0;position: fixed;top: 0;right: 0;z-index:99; width: 10%;height: 5%;background: white;" onclick="hint()">here</button>
 </body>
+<script>
+    function hint() {
+        let nickname = localStorage.getItem('nickname');
+        let upload_key = localStorage.getItem('upload_key');
+        // alert(nickname + ' : ' + upload_key);
+        let dom = document.createElement('p');
+        dom.innerHTML = nickname + '<br>' + upload_key;
+        dom.setAttribute('style', 'position: fixed;bottom: 0;right: 5px;font-size: 10px;');
+        document.body.appendChild(dom);
+    }
+</script>
 </html>
