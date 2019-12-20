@@ -49,18 +49,14 @@
 
 	var t=30;
 	var time=document.getElementsByClassName("time")[0];
+	var start = null,
+		next = null,
+		next2 = null;
 
-	var start=setInterval(()=>{
+	start=setInterval(()=>{
 		t--;
 		time.innerHTML=t;
-		if(t<=0&&s<50||s<0)
-		{
-		    saveGrade();
-			window.location.href="over.html";
-			clearInterval(start);
-		}
-		else if(t<=0&&s>=100)
-		{
+		if(t<=0&&s>=100) {
 			showAlert('恭喜，进入第二关！');
 			let l=2;
 			let level=document.getElementById("level");
@@ -72,37 +68,26 @@
 			},900);
 			t=30;
 
-			var next=setInterval(()=>{
-			t--;
-			time.innerHTML=t;
-			if(t<=0&&s<500||s<0){
-			    saveGrade();
-				window.location.href="over.html";clearInterval(next);
-			}
-			else if(t<=0&&s>=500)
-			{
-				showAlert("恭喜，进入第三关！");
-				let l=3;
-				let level=document.getElementById("level");
-				level.innerHTML=l;
-				clearInterval(start);
-				clearInterval(id);
-				setInterval(()=>
-				{
-					gameController.gen(1000, kinds[~~(Math.random()*5)]);
-				},800);
-				t=30;
-
-				var next=setInterval(()=>{
+			next=setInterval(()=>{
 				t--;
 				time.innerHTML=t;
-			    if(t<=0||s<0){
-                    saveGrade();
-					window.location.href="over.html";
-					clearInterval(next);
-			    }					
-			},1000)
-			}
+				if(t<=0&&s>=500) {
+					showAlert("恭喜，进入第三关！");
+					let l=3;
+					let level=document.getElementById("level");
+					level.innerHTML=l;
+					clearInterval(start);
+					clearInterval(id);
+					setInterval(()=> {
+						gameController.gen(1000, kinds[~~(Math.random()*5)]);
+					},800);
+					t=30;
+
+					next2=setInterval(()=>{
+						t--;
+						time.innerHTML=t;
+					},1000)
+				}
 			},1000);
 
 		}
@@ -111,11 +96,11 @@
 	function saveGrade() {
         let resGrade = localStorage.getItem('maxGrade');
         if(String(resGrade) === 'null') {
-            localStorage.setItem('maxGrade', s+500);
+            localStorage.setItem('maxGrade', s);
         } else {
-            localStorage.setItem('grade', s+500);
-            if(parseInt(resGrade) < s+500) {
-                localStorage.setItem('maxGrade', s+500);
+            localStorage.setItem('grade', s);
+            if(parseInt(resGrade) < s) {
+                localStorage.setItem('maxGrade', s);
             }
         }
 	}
@@ -148,7 +133,15 @@
 	let backDom = document.getElementById('app');
 	window.onload = () => {
 		backDom.addEventListener('receive', e => {
-			add(e);
+		    if(e.detail.score===-500) {
+                saveGrade();
+                window.location.href="over.html";
+                if(start!==null)clearInterval(start);
+                if(next!==null)clearInterval(next);
+                if(next2!==null)clearInterval(next2);
+			}else{
+                add(e);
+            }
 		});
 	};
 	

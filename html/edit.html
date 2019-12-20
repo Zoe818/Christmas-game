@@ -246,6 +246,19 @@
         margin: 10px auto;
     }
 
+    .loading {
+        display: inline-block;
+        position: fixed;
+        font-size: 20px;
+        height: 30px;
+        width: 100px;
+        color: white;
+        font-weight: bold;
+        top: calc(20% - 15px);
+        left: calc(50% - 50px);
+        z-index: 100;
+    }
+
     /* tags imgs */
 
     .elk-none {
@@ -590,7 +603,10 @@
                 rotate: parseInt(item.rotate),
                 icon_flag: icon_name // icon name
             };
-
+            let loading = document.createElement('span');
+            loading.innerHTML = 'Loading...';
+            loading.setAttribute('class', 'loading');
+            document.body.appendChild(loading);
             let response = await request('/image', 'POST', data);
             if(response.code === 0) {
                 final_base64 = response.data;
@@ -614,6 +630,7 @@
                 // error
                 alert(response.message);
             }
+            document.body.removeChild(loading);
         }
 
         /**
