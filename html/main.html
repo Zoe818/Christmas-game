@@ -150,14 +150,15 @@
 		backDom.addEventListener('receive', e => {
 			add(e);
 		});
-	}
+	};
 	
 	let gameController = new gameLogic();
 	gameController.init(backDom, document.getElementById('recv'));
 	console.log(gameController.test());
 	console.log(gameController);
 	let id = setInterval( () => {
-		gameController.gen(1500, kinds[~~(Math.random()*5)]);
+        let swi = ~~(~~(Math.random()*41)/10);
+		gameController.gen(1500, kinds[swi]);
 	},1000);
 
 </script>
