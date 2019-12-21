@@ -58,7 +58,7 @@
 		time.innerHTML=t;
         localStorage.setItem('level','1');
         if(t<=0&&s>=100) {
-			showAlert('恭喜，进入第二关！');
+			showAlert('恭喜，进入第二关！<br>(点击屏幕继续）');
             localStorage.setItem('level','2');
             let l=2;
 			let level=document.getElementById("level");
@@ -74,7 +74,7 @@
 				t--;
 				time.innerHTML=t;
 				if(t<=0&&s>=300) {
-					showAlert("恭喜，进入第三关！");
+					showAlert("恭喜，进入第三关！<br>(点击屏幕继续)");
 					localStorage.setItem('level','3');
 					let l=3;
 					let level=document.getElementById("level");

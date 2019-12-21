@@ -75,25 +75,21 @@ html, body, #app, .wx-pages {
 /* alert */
 .alert{
     box-sizing: border-box;
-    width: 60%;
-    max-height: 40%;
+    width: 80%;
     position: fixed;
     top: 50%;
     left: 0;
     right: 0;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
     margin: 0 auto;
     padding: 10px;
     background-image: url('../static/alert.png');
     background-size: cover;
     background-repeat: no-repeat;
-    border-radius: 4px;
-    box-shadow: 0 0 4px;
     text-align: center;
     font-size: 10pt;
-    font-weight: normal;
-    word-wrap: break-word;
+    color:#3b4e9e;
+    font-weight: bold;
+    word-wrap: normal;
     overflow-x: hidden;
     overflow-y: auto;
     display: none;
