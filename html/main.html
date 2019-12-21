@@ -73,7 +73,7 @@
 			next=setInterval(()=>{
 				t--;
 				time.innerHTML=t;
-				if(t<=0&&s>=500) {
+				if(t<=0&&s>=300) {
 					showAlert("恭喜，进入第三关！");
 					localStorage.setItem('level','3');
 					let l=3;
@@ -91,8 +91,17 @@
 						time.innerHTML=t;
 					},1000)
 				}
+				else if(t<=0&&s<300){
+					clearInterval(start);
+					window.location.href="over.html";
+				}
 			},1000);
 
+		}
+		else if(t<=0&&s<100)
+		{
+			clearInterval(start);
+			window.location.href="over.html";
 		}
 	},1000);
 

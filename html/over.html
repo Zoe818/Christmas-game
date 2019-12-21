@@ -24,6 +24,14 @@
         background-repeat: no-repeat;
         background-size: cover;
     }
+    #back-btn {
+        position: absolute;
+        top: 30px;
+        left: 20px;
+        height: 21px;
+        background: none;
+        border: none;
+    }
     .window{
         position: relative;
         text-align: center;
@@ -74,6 +82,7 @@
 
 </style>
 <body>
+    <img id="back-btn" src="../static/back-icon.png" onclick="window.location.href = 'first.html'"height="20">
     <div class="window">
         <image class="bg-pic"src="../static/window_grade.png"></image>
         <image class="feima" src="../static/stop.png"></image>
