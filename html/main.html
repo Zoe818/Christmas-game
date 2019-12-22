@@ -7,6 +7,9 @@
 	<title>圣诞礼物</title>
 	<link rel="stylesheet" type="text/css" href="..\css\main.css">
 </head>
+
+<script src="http://cdn.jsdelivr.net/npm/eruda"></script>
+<script>eruda.init();</script>
 <body>
 
 	<div id='app'></div>
@@ -155,14 +158,6 @@
                 add(e);
             }
 		});
-
-		// debug
-        ;(function () {
-            var src = '//cdn.jsdelivr.net/npm/eruda';
-            if (!/eruda=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
-            document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
-            document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
-        })();
 	};
 	
 	let gameController = new gameLogic();

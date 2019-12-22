@@ -319,6 +319,7 @@
     </div>
 
     <script src="../js/fetch.js"></script>
+    <script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.min.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
     <script src="../js/cropper.min.js"></script>
     <script>
@@ -563,12 +564,13 @@
 
             let elelayer = $(`<span id="target" class="move" style="left: ${left}px; top: ${top}px;"></span>`).appendTo(".window #upload-img");
             let src = $(my)[0].children[0].src;
-            icon_file = $('<img/>').attr({
+            $('<img/>').attr({
                 id: 'target-img',
                 src: src,
                 width: 70,
                 height: 70,
             }).appendTo(elelayer);
+            icon_file = document.getElementById('target-img');
 
             $(`<img id="rotate-btn" src="../static/turn.png">`).appendTo(elelayer);
             let widthOrg = elelayer.find("img").width(),
@@ -672,8 +674,8 @@
             let pos = getElementPosition(document.getElementById('final-img'));
 
             let data = {
-                avator_width: 200,
-                avator_height: 200,
+                avatar_width: 200,
+                avatar_height: 200,
                 hat_w: parseInt(item.width * item.scale),
                 hat_h: parseInt(item.height * item.scale),
                 hat_x: parseInt(item.left - pos.x + (item.width * item.scale)/2),
@@ -685,6 +687,8 @@
             loading.setAttribute('class', 'loading');
             document.body.appendChild(loading);
             // 请求生成图片
+            // let res_avatar = ginCanvasImage(getBase64Image(bg_file));
+            // await waitImageLoad(res_avatar);
             final_base64 = drawUserAvatar(bg_file, icon_file, data);
             document.getElementById('upload-img').setAttribute('style', 'display: none');
             // 展示final页面
@@ -702,7 +706,7 @@
             document.getElementById('final-btn-group').setAttribute('style', 'display: flex');
             document.getElementById('submit-btn').setAttribute('style', 'display: none');
             document.body.removeChild(loading);
-            setInterval(() => {
+            setTimeout(() => {
                 count('avatar');
             },0);
         }
@@ -794,9 +798,12 @@
         function drawUserAvatar(avatarImg, hatImg, params) {
             //创建canvas
             let canvas = document.createElement("canvas");
+            canvas.width = params.avatar_width;
+            canvas.height = params.avatar_height;
             //这一步可以检查浏览器对canvas的兼容性
             if(!canvas.getContext("2d")){
                 //处理不兼容的情况
+                alert('您的浏览器暂不支持生成头像嗷！');
                 return
             }
             let ctx = canvas.getContext("2d");
@@ -807,8 +814,8 @@
             //画头像背景
             ctx.drawImage(avatarImg, 0, 0, params.avatar_width, params.avatar_height)
             //画帽子，translate确定帽子的位置，rotate确定帽子的旋转
-            ctx.translate(params.hat_x, params.hat_y)
-            ctx.rotate(params.hat_rotate * Math.PI / 180)
+            ctx.translate(params.hat_x, params.hat_y);
+            ctx.rotate(params.hat_rotate * Math.PI / 180);
             ctx.drawImage(hatImg, -params.hat_w / 2, -params.hat_h / 2, params.hat_w, params.hat_h)
 
             return canvas.toDataURL("image/png")

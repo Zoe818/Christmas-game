@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>排行榜</title>
 </head>
-
+<script src="http://cdn.jsdelivr.net/npm/eruda"></script>
+<script>eruda.init();</script>
 <style>
     html, body, #app, .wx-pages {
         padding: 0;
@@ -117,14 +118,6 @@
             // error
             alert(response.message);
         }
-
-        // debug
-        ;(function () {
-            var src = '//cdn.jsdelivr.net/npm/eruda';
-            if (!/eruda=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
-            document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
-            document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
-        })();
     }
 </script>
 </body>

@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>游戏结束</title>
 </head>
+<!-- DEBUG -->
+<script src="http://cdn.jsdelivr.net/npm/eruda"></script>
+<script>eruda.init();</script>
 <style>
     html, body, #app, .wx-pages {
         padding: 0;
@@ -114,14 +117,6 @@
             count(level);
             localStorage.removeItem('level');
         }
-
-        // debug
-        ;(function () {
-            var src = '//cdn.jsdelivr.net/npm/eruda';
-            if (!/eruda=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
-            document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
-            document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
-        })();
     };
 
     // 绑定submit Image
