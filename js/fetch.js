@@ -29,7 +29,7 @@ async function request(url = '', method = 'GET', data = {} ){
     }
     // 信息请求
     let requestConfig = {
-        credentials: 'include',
+        // credentials: 'include',
         method: method,
         headers: {
             'Accept': 'application/json',
