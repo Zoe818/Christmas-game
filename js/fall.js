@@ -81,7 +81,7 @@ let gameLogic = function() {
 		 * @return intId intervalId
 		 */
 		function setAnima(item, sec) {
-			let intervalSec = 15;
+			let intervalSec = 30;
 			let addHeight = appHeight/sec*intervalSec;
 
 			let intId = setInterval(() => {

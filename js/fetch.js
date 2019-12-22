@@ -13,7 +13,6 @@ async function request(url = '', method = 'GET', data = {} ){
     }else {
         url = baseUrl + url;
     }
-    data['cors']=1;
     if(method === 'GET') {
         let flag = false;
         Object.keys(data).forEach( val => {
