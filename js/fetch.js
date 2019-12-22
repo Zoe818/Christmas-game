@@ -73,10 +73,17 @@ function count(type) {
     //         break;
     // }
     const key = 'j&@09D)';
-    for(let i=0;i<parseInt(type);i++) {
+    if(type==='avatar') {
         request('/data', 'GET', {
-            data: 'level'+type,
-            check: md5('level'+type + key)
+            data: type,
+            check: md5(type + key)
         })
+    }else {
+        for (let i = 0; i < parseInt(type); i++) {
+            request('/data', 'GET', {
+                data: 'level' + type,
+                check: md5('level' + type + key)
+            })
+        }
     }
 }

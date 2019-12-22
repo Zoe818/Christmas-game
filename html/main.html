@@ -79,7 +79,7 @@
 					let l=3;
 					let level=document.getElementById("level");
 					level.innerHTML=l;
-					clearInterval(start);
+					clearInterval(next);
 					clearInterval(id);
 					setInterval(()=> {
 						gameController.gen(1000, kinds[~~(Math.random()*5)]);
@@ -92,7 +92,7 @@
 					},1000)
 				}
 				else if(t<=0&&s<300){
-					clearInterval(start);
+					clearInterval(next);
 					window.location.href="over.html";
 				}
 			},1000);
@@ -155,6 +155,14 @@
                 add(e);
             }
 		});
+
+		// debug
+        ;(function () {
+            var src = '//cdn.jsdelivr.net/npm/eruda';
+            if (!/eruda=true/.test(window.location) && localStorage.getItem('active-eruda') != 'true') return;
+            document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+            document.write('<scr' + 'ipt>eruda.init();</scr' + 'ipt>');
+        })();
 	};
 	
 	let gameController = new gameLogic();

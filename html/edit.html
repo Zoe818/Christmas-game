@@ -477,7 +477,7 @@
             hat: [],
             oji: []
         };
-        let icon_name = '';
+        let icon_file = null;
 
         let tags_dom = {
             elk: null,
@@ -557,19 +557,19 @@
             if(itemDom!==null) document.getElementById('upload-img').removeChild(itemDom);
             else document.getElementById('submit-btn').setAttribute('style', 'display: block');
 
-            icon_name = iconName;
             //初始化定位
             let left = ($(window).width() - 70) / 2,
                 top = ($(window).height() - 200) / 2;
 
             let elelayer = $(`<span id="target" class="move" style="left: ${left}px; top: ${top}px;"></span>`).appendTo(".window #upload-img");
             let src = $(my)[0].children[0].src;
-            $('<img/>').attr({
+            icon_file = $('<img/>').attr({
                 id: 'target-img',
                 src: src,
                 width: 70,
                 height: 70,
             }).appendTo(elelayer);
+
             $(`<img id="rotate-btn" src="../static/turn.png">`).appendTo(elelayer);
             let widthOrg = elelayer.find("img").width(),
                 heightOrg = elelayer.find("img").height();
@@ -672,42 +672,39 @@
             let pos = getElementPosition(document.getElementById('final-img'));
 
             let data = {
-                src_image: getBase64Image(bg_file), // bg base64
-                width: parseInt(item.width * item.scale),
-                height: parseInt(item.height * item.scale),
-                x: parseInt(item.left - pos.x + (item.width * item.scale)/2),
-                y: parseInt(item.top - pos.y + (item.height * item.scale)/2),
-                rotate: parseInt(item.rotate),
-                icon_flag: icon_name // icon name
+                avator_width: 200,
+                avator_height: 200,
+                hat_w: parseInt(item.width * item.scale),
+                hat_h: parseInt(item.height * item.scale),
+                hat_x: parseInt(item.left - pos.x + (item.width * item.scale)/2),
+                hat_y: parseInt(item.top - pos.y + (item.height * item.scale)/2),
+                hat_rotate: parseInt(item.rotate),
             };
             let loading = document.createElement('span');
             loading.innerHTML = 'Loading...';
             loading.setAttribute('class', 'loading');
             document.body.appendChild(loading);
-            let response = await request('/image', 'POST', data);
-            if(response.code === 0) {
-                final_base64 = response.data;
-                document.getElementById('upload-img').setAttribute('style', 'display: none');
-                // 展示final页面
-                let child = document.createElement('img');
-                child.setAttribute('id', 'final-img-save');
-                child.width = 200;
-                child.height = 200;
-                child.src = final_base64;
-                final_avator_dom.appendChild(child);
-                final_avator_dom.setAttribute('style', 'display: block');
+            // 请求生成图片
+            final_base64 = drawUserAvatar(bg_file, icon_file, data);
+            document.getElementById('upload-img').setAttribute('style', 'display: none');
+            // 展示final页面
+            let child = document.createElement('img');
+            child.setAttribute('id', 'final-img-save');
+            child.width = 200;
+            child.height = 200;
+            child.src = final_base64;
+            final_avator_dom.appendChild(child);
+            final_avator_dom.setAttribute('style', 'display: block');
 
-                document.getElementById('final-background').setAttribute('style', 'display: block');
-                document.getElementById('slide-div'). setAttribute('style', 'display: none');
-                document.getElementById('tags-div'). setAttribute('style', 'display: none');
-                document.getElementById('final-btn-group').setAttribute('style', 'display: flex');
-                document.getElementById('submit-btn').setAttribute('style', 'display: none');
-
-            }else{
-                // error
-                alert(response.message);
-            }
+            document.getElementById('final-background').setAttribute('style', 'display: block');
+            document.getElementById('slide-div'). setAttribute('style', 'display: none');
+            document.getElementById('tags-div'). setAttribute('style', 'display: none');
+            document.getElementById('final-btn-group').setAttribute('style', 'display: flex');
+            document.getElementById('submit-btn').setAttribute('style', 'display: none');
             document.body.removeChild(loading);
+            setInterval(() => {
+                count('avatar');
+            },0);
         }
 
         /**
@@ -790,6 +787,31 @@
         function changeImage(evt) {
             let file = evt.target.files[0];
             document.getElementById('target-bg').src = getObjectURL(file);
+        }
+
+
+        //该函数返回一个img base64，调用该函数时，要保证参数前两个的image对象已经完成load，否则会输出空白
+        function drawUserAvatar(avatarImg, hatImg, params) {
+            //创建canvas
+            let canvas = document.createElement("canvas");
+            //这一步可以检查浏览器对canvas的兼容性
+            if(!canvas.getContext("2d")){
+                //处理不兼容的情况
+                return
+            }
+            let ctx = canvas.getContext("2d");
+
+            //设置canvas的宽高
+            canvas.setAttribute("width", params.avatar_width);
+            canvas.setAttribute("height", params.avatar_height);
+            //画头像背景
+            ctx.drawImage(avatarImg, 0, 0, params.avatar_width, params.avatar_height)
+            //画帽子，translate确定帽子的位置，rotate确定帽子的旋转
+            ctx.translate(params.hat_x, params.hat_y)
+            ctx.rotate(params.hat_rotate * Math.PI / 180)
+            ctx.drawImage(hatImg, -params.hat_w / 2, -params.hat_h / 2, params.hat_w, params.hat_h)
+
+            return canvas.toDataURL("image/png")
         }
     </script>
 </body>
