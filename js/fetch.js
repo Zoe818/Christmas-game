@@ -45,7 +45,7 @@ async function request(url = '', method = 'GET', data = {} ){
     }
 
     try {
-        const response = await fetch(url, requestConfig);
+        const response = await window.fetch(url, requestConfig);
         const responseJson = await response.json();
         return responseJson
     } catch (error) {
