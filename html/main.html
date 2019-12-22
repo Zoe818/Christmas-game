@@ -55,6 +55,7 @@
 	var start = null,
 		next = null,
 		next2 = null;
+	var nickname=localStorage.getItem(nickname);
 
 	start=setInterval(()=>{
 		t--;
@@ -96,6 +97,9 @@
 						{
 							clearInterval(start);
 							clearInterval(id);
+							if(String(nickname)!=null)
+							window.location.href="success.html";
+							else
 							window.location.href="over.html";
 						}
 					},1000)
@@ -103,7 +107,10 @@
 				else if(t<=0&&s<300){
 					clearInterval(start);
 					clearInterval(id);
-					window.location.href="over.html";
+					if(String(nickname)!=null)
+							window.location.href="success.html";
+							else
+							window.location.href="over.html";
 				}
 			},1000);
 
@@ -112,7 +119,10 @@
 		{
 			clearInterval(start);
 			clearInterval(id);
-			window.location.href="over.html";
+			if(String(nickname)!=null)
+				window.location.href="success.html";
+				else
+				window.location.href="over.html";
 		}
 	},1000);
 
