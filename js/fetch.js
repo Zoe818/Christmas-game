@@ -2,7 +2,7 @@
   请求函数
  */
 
-let baseUrl = 'https://hackday.itoken.team/api/christmas2019/'; // TODO
+let baseUrl = 'https://hackday.itoken.team/api/christmas2019/';
 async function request(url = '', method = 'GET', data = {} ){
     // method大写
     method = String(method).toUpperCase();
@@ -43,6 +43,8 @@ async function request(url = '', method = 'GET', data = {} ){
             value: JSON.stringify(data)
         })
     }
+
+    console.log(url, requestConfig);
 
     try {
         const response = await window.fetch(url, requestConfig);
