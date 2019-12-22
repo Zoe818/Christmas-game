@@ -8,6 +8,9 @@ let gameLogic = function() {
 		let appHeight;			// 屏幕高度
 		let timer={};			// timer object
 		let inter={};			// intervaler object
+		let tmp = {
+
+		};
 
 		/**
 		 * 初始化gameController
@@ -39,9 +42,10 @@ let gameLogic = function() {
 		 */
 		function genItem(sec, type) {
 			let beginX = randomX();
-			let item = document.createElement('div');
+			let item = document.createElement('img');
 			item.setAttribute('class', 'item'); // TODO class name
-			item.setAttribute('style', `left: ${beginX}px;background-image: url('${type.img}')`);
+			item.src = type.img;
+			item.setAttribute('style', `left: ${beginX}px`);
 			dom.appendChild(item);
 			setAnima(item, sec);
 			judgeRecv(item, type.score, beginX, sec);
@@ -77,7 +81,7 @@ let gameLogic = function() {
 		 * @return intId intervalId
 		 */
 		function setAnima(item, sec) {
-			let intervalSec = 15;
+			let intervalSec = 30;
 			let addHeight = appHeight/sec*intervalSec;
 
 			let intId = setInterval(() => {

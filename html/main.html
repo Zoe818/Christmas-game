@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+	<!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />-->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<title>圣诞礼物</title>
 	<link rel="stylesheet" type="text/css" href="..\css\main.css">
 </head>
+
+<!--<script src="http://cdn.jsdelivr.net/npm/eruda"></script>-->
+<!--<script>eruda.init();</script>-->
 <body>
 
 	<div id='app'></div>
@@ -79,7 +82,7 @@
 					let l=3;
 					let level=document.getElementById("level");
 					level.innerHTML=l;
-					clearInterval(start);
+					clearInterval(next);
 					clearInterval(id);
 					setInterval(()=> {
 						gameController.gen(1000, kinds[~~(Math.random()*5)]);
@@ -92,7 +95,7 @@
 					},1000)
 				}
 				else if(t<=0&&s<300){
-					clearInterval(start);
+					clearInterval(next);
 					window.location.href="over.html";
 				}
 			},1000);

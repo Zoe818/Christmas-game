@@ -2,7 +2,8 @@
   请求函数
  */
 
-let baseUrl = 'https://hackday.itoken.team/api/christmas2019/'; // TODO
+// let baseUrl = 'https://hackday.itoken.team/api/christmas2019/';
+let baseUrl = 'http://123.207.188.192:8080/';
 async function request(url = '', method = 'GET', data = {} ){
     // method大写
     method = String(method).toUpperCase();
@@ -28,7 +29,7 @@ async function request(url = '', method = 'GET', data = {} ){
     }
     // 信息请求
     let requestConfig = {
-        credentials: 'include',
+        // credentials: 'include',
         method: method,
         headers: {
             'Accept': 'application/json',
@@ -44,8 +45,10 @@ async function request(url = '', method = 'GET', data = {} ){
         })
     }
 
+    // console.log(url, requestConfig);
+
     try {
-        const response = await fetch(url, requestConfig);
+        const response = await window.fetch(url, requestConfig);
         const responseJson = await response.json();
         return responseJson
     } catch (error) {
@@ -73,10 +76,17 @@ function count(type) {
     //         break;
     // }
     const key = 'j&@09D)';
-    for(let i=0;i<parseInt(type);i++) {
+    if(type==='avatar') {
         request('/data', 'GET', {
-            data: 'level'+type,
-            check: md5('level'+type + key)
+            data: type,
+            check: md5(type + key)
         })
+    }else {
+        for (let i = 0; i < parseInt(type); i++) {
+            request('/data', 'GET', {
+                data: 'level' + type,
+                check: md5('level' + type + key)
+            })
+        }
     }
 }
