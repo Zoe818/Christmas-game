@@ -142,7 +142,7 @@
         if(response.code === 0) {
             // success
             window.location.href='avatar.html';
-            if(String(key) === 'null') {
+            if(String(key) === 'null' || String(key)==='') {
                 localStorage.setItem('upload_key', response.data.user_info.upload_key);
             }
         }else{

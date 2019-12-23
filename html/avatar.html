@@ -120,7 +120,7 @@
         const response = await request('/score', 'POST', request_data);
         if(response.code === 0) {
             // success
-            if(String(key) === 'null') {
+            if(String(key) === 'null' || String(key)==='') {
                 localStorage.setItem('upload_key', response.data.user_info.upload_key);
             }
             document.getElementById('ranks').innerText = response.data.order + '名';
