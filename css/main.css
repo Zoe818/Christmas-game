@@ -94,3 +94,13 @@ html, body, #app, .wx-pages {
     overflow-y: auto;
     display: none;
 }
+
+@keyframes myfall{
+    from { top: 0; }
+    to { top: 100%; }
+}
+
+@-webkit-keyframes myfall{
+    from { top: 0; }
+    to { top: 100%; }
+}

@@ -12,6 +12,7 @@ let gameLogic = function() {
 		let tmp = {
 
 		};
+		let have = {};
 
 		/**
 		 * 初始化gameController
@@ -44,11 +45,18 @@ let gameLogic = function() {
 		function genItem(sec, type) {
 			let beginX = randomX();
 			let item = document.createElement('img');
-			item.setAttribute('class', 'item'); // TODO class name
+			item.setAttribute('class', 'item');
 			item.src = type.img;
-			item.setAttribute('style', `left: ${beginX}px`);
-			dom.appendChild(item);
-			setAnima(item, sec);
+			item.setAttribute('style', `left: ${beginX}px;`);
+			item.style.animation = `myfall ${sec}ms linear`;
+			item.style.WebkitAnimation = `myfall ${sec}ms linear`;
+            setTimeout( () => {
+                if(have[item]!==undefined)deleNode(item);
+            },sec);
+            have[item]=true;
+            dom.appendChild(item);
+
+            // setAnima(item, sec);
 			judgeRecv(item, type.score, beginX, sec);
 		}
 
@@ -69,6 +77,7 @@ let gameLogic = function() {
 						}
 					}));
 					deleNode(item);
+					delete(have[item]);
 				}
 				delete(timer[timerId]);
 			}, sec*0.92);
@@ -82,25 +91,31 @@ let gameLogic = function() {
 		 * @return intId intervalId
 		 */
 		function setAnima(item, sec) {
-			let intervalSec = 30;
-			let addHeight = appHeight/sec*intervalSec;
+			// item.style.animation = `myfall ${sec}s;`;
+			// item.style['-webkit-animation']=`myfall ${sec}s;`;
+			// setTimeout( () => {
+			// 	deleNode(item);
+			// },sec);
 
-			let intId = setInterval(() => {
-				let offTop = item.offsetTop;
-				if(offTop>=appHeight) {
-					// 降落完成
-					// TODO 删除DOM节点
-					clearInterval(intId);
-					delete(inter[intId]);
-					deleNode(item);
-				}
-				else{
-					// 降落继续
-					item.style.top = (offTop+addHeight)+'px';
-				}
-			}, intervalSec);
-			inter[intId] = intId;
-			return intId;
+			// let intervalSec = 30;
+			// let addHeight = appHeight/sec*intervalSec;
+            //
+			// let intId = setInterval(() => {
+			// 	let offTop = item.offsetTop;
+			// 	if(offTop>=appHeight) {
+			// 		// 降落完成
+			// 		// TODO 删除DOM节点
+			// 		clearInterval(intId);
+			// 		delete(inter[intId]);
+			// 		deleNode(item);
+			// 	}
+			// 	else{
+			// 		// 降落继续
+			// 		item.style.top = (offTop+addHeight)+'px';
+			// 	}
+			// }, intervalSec);
+			// inter[intId] = intId;
+			// return intId;
 		}
 
 		/**
