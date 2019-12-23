@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!--<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />-->
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>游戏结束</title>
 </head>
-<!-- DEBUG -->
-<!--<script src="http://cdn.jsdelivr.net/npm/eruda"></script>-->
-<!--<script>eruda.init();</script>-->
 <style>
     html, body, #app, .wx-pages {
         padding: 0;
@@ -88,8 +85,8 @@
     <img id="back-btn" src="../static/back-icon.png" onclick="window.location.href = 'first.html'"height="20">
     <div class="window">
         <image class="bg-pic"src="../static/window_grade.png"></image>
-        <image class="feima" src="../static/stop.png"></image>
-        <h2>游戏结束</h2>
+        <image class="feima" src="../static/Congratulation.png"></image>
+        <h2>恭喜通关！</h2>
         <div class="nickname">
             <input type="text" id="nickname" placeholder="请输入您的昵称">
         </div>
@@ -141,8 +138,8 @@
         const response = await request('/score', 'POST', request_data);
         if(response.code === 0) {
             // success
-            window.location.href='edit.html';
-            if(String(key) === 'null') {
+            window.location.href='avatar.html';
+            if(String(key) !== 'null') {
                 localStorage.setItem('upload_key', response.data.user_info.upload_key);
             }
         }else{

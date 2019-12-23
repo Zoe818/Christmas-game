@@ -1,7 +1,8 @@
 let gameLogic = function() {
 	return (function() {
 		const phantom=50;		// 接礼物误差px
-		const itemWidth=50;	// 礼物的宽度px
+		const itemWidth=60;	// 礼物的宽度px
+		const sideWidth=10;
 		let dom;				// 容器DOM节点
 		let recver;				// recevier DOM节点
 		let appWidth;			// 屏幕宽度
@@ -30,7 +31,7 @@ let gameLogic = function() {
 		 */
 		function randomX() {
 			let ran = Math.random();
-			let max = appWidth-itemWidth;
+			let max = appWidth-itemWidth-sideWidth;
 			return ran*max;
 		}
 
@@ -134,7 +135,7 @@ let gameLogic = function() {
 			 */
 			test: () => {
 				let string = 'appWidth:'+appWidth;
-				return string;
+				console.log(string);
 			}
 		}
 	})()

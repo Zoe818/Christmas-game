@@ -19,24 +19,23 @@
     .window{
         position: relative;
         text-align: center;
-        top:20%;
+        top:10%;
       }
     .bg-pic{
        width:90%;
     }
     .confirm{
         position: absolute;
-        top:40%;
+        top:50%;
         left:0;
         right:0;
         bottom:0;
         margin:auto;
         width: 150px;
-
     }
     p{
         position: absolute;
-        top:50%;
+        top:60%;
         left: 0;
         right:0;
         bottom:0;
@@ -46,17 +45,6 @@
         font-size:large;
     }
 
-    h3{
-        position: absolute;
-        top:42%;
-        left: 0;
-        right:0;
-        bottom:0;
-        margin:auto;
-        color:#3b4e9e;
-        font-family: "Microsoft Yahei";
-  
-    }
     .retry{
         position: relative;
         width: 287px;
@@ -64,20 +52,40 @@
         top:20px;
     }
     #feima{
-        width:150px;
+        width:160px;
         position:absolute;
-        top:0;
+        top:10%;
         left:0;
         right:0;
         margin:auto;
     }
 
+    #content td {
+        color: #3b4e9e;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+    }
+    #content {
+        position:absolute;
+        left:0;
+        right:0;
+        margin:0 10%;
+        top:50%;
+        width: 80%;
+    }
+
 </style>
 <body>
     <div class="window">
-    <image class="bg-pic"src="../static/window_grade.png"></image>
+    <image class="bg-pic"src="../static/window1.png"></image>
     <img id="feima" src="../static/Congratulation.png">
-    <h3 id="nicknames"></h3>
+    <table id="content">
+        <td id="nicknames"></td>
+        <td id="grades"></td>
+        <td id="ranks"></td>
+    </table>
+  <!-- <h3 id="nicknames">昵称昵称</h3>-->
     <p>快为自己的头像带上圣诞帽吧！</p>
 
         <image class="confirm" src="../static/edit.png" onclick="window.location.href='edit.html'"></image>
@@ -89,6 +97,11 @@
         let nickname = localStorage.getItem('nickname');
         if(String(nickname) !== 'null') {
             document.getElementById('nicknames').innerText = nickname;
+        }
+        let grade = localStorage.getItem('grade');
+        if(String(grade)!=='null')
+        {
+            document.getElementById('grades').innerText=grade+'分';
         }
     }
 </script>
