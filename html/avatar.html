@@ -78,8 +78,8 @@
 </style>
 <body>
     <div class="window">
-    <image class="bg-pic"src="../static/window1.png"></image>
-    <img id="feima" src="../static/Congratulation.png">
+    <image class="bg-pic"src="../static/window1.svg"></image>
+    <img id="feima" src="../static/Congratulation.svg">
     <table id="content">
         <td id="nicknames"></td>
         <td id="grades"></td>
@@ -88,12 +88,15 @@
   <!-- <h3 id="nicknames">昵称昵称</h3>-->
     <p>快为自己的头像带上圣诞帽吧！</p>
 
-        <image class="confirm" src="../static/edit.png" onclick="window.location.href='edit.html'"></image>
-        <image class="retry" src="../static/retry.png" onclick="window.location.href='main.html'"></image>
+        <image class="confirm" src="../static/edit.svg" onclick="window.location.href='edit.html'"></image>
+        <image class="retry" src="../static/retry.svg" onclick="window.location.href='main.html'"></image>
     </div>
 
+    <script src="https://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.min.js"></script>
+    <script src="../js/fetch.js" type="text/javascript"></script>
+
 <script>
-    window.onload = () => {
+    window.onload = async () => {
         let nickname = localStorage.getItem('nickname');
         if(String(nickname) !== 'null') {
             document.getElementById('nicknames').innerText = nickname;
@@ -102,6 +105,28 @@
         if(String(grade)!=='null')
         {
             document.getElementById('grades').innerText=grade+'分';
+        }
+
+        const pkey = 'j&@09D)';
+        let request_data = {
+            nickname,
+            score: parseInt(grade),
+            check: md5(grade+pkey)
+        };
+        let key = localStorage.getItem('upload_key');
+        if(String(key) !== 'null') {
+            request_data['upload_key'] = key;
+        }
+        const response = await request('/score', 'POST', request_data);
+        if(response.code === 0) {
+            // success
+            if(String(key) === 'null') {
+                localStorage.setItem('upload_key', response.data.user_info.upload_key);
+            }
+            document.getElementById('ranks').innerText = response.data.order + '名';
+        }else{
+            // error
+            alert(response.message);
         }
     }
 </script>
