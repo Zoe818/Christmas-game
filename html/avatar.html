@@ -98,11 +98,11 @@
 <script>
     window.onload = async () => {
         let nickname = localStorage.getItem('nickname');
-        if(String(nickname) !== 'null') {
+        if(String(nickname) !== 'null' && String(nickname) !== '') {
             document.getElementById('nicknames').innerText = nickname;
         }
         let grade = localStorage.getItem('grade');
-        if(String(grade)!=='null')
+        if(String(grade)!=='null' && String(grade)!=='')
         {
             document.getElementById('grades').innerText=grade+'分';
         }
@@ -111,10 +111,10 @@
         let request_data = {
             nickname,
             score: parseInt(grade),
-            check: md5(grade+pkey)
+            check: md5(parseInt(grade)+pkey)
         };
         let key = localStorage.getItem('upload_key');
-        if(String(key) !== 'null') {
+        if(String(key) !== 'null' && String(key) !== '') {
             request_data['upload_key'] = key;
         }
         const response = await request('/score', 'POST', request_data);
