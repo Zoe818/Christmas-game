@@ -123,10 +123,8 @@
     document.getElementById('submit-btn').onclick = async () => {
         let grade = parseInt(localStorage.getItem('grade'));
         let resname = localStorage.getItem('nickname');
-        if(String(resname) === 'null') {
+        if(String(resname) === 'null' || String(resname) === '') {
             localStorage.setItem('nickname', nickname);
-        }else{
-            nickname = String(resname);
         }
         const pkey = 'j&@09D)';
         let request_data = {
