@@ -56,7 +56,7 @@
 	var start = null,
 		next = null,
 		next2 = null;
-	var nickname=localStorage.getItem(nickname);
+	var nickname=localStorage.getItem('nickname');
 
 	start=setInterval(()=>{
 		t--;
@@ -98,18 +98,18 @@
 						{
 							clearInterval(start);
 							clearInterval(id);
-							if(String(nickname)!=null)
-							window.location.href="success.html";
+							if(String(nickname)!=='null')
+							window.location.href="avatar.html";
 							else
-							window.location.href="over.html";
+							window.location.href="success.html";
 						}
 					},1000)
 				}
 				else if(t<=0&&s<300){
 					clearInterval(start);
 					clearInterval(id);
-					if(String(nickname)!=null)
-							window.location.href="success.html";
+					if(String(nickname)!=='null')
+							window.location.href="avatar.html";
 							else
 							window.location.href="over.html";
 				}
@@ -121,7 +121,7 @@
 			clearInterval(start);
 			clearInterval(id);
 			if(String(nickname)!=null)
-				window.location.href="success.html";
+				window.location.href="avatar.html";
 				else
 				window.location.href="over.html";
 		}

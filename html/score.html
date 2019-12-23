@@ -31,7 +31,7 @@
         right:0;
         margin:auto;
         width: 100%;
-
+        z-index:0;
     }
 
     #ranklist {
@@ -53,9 +53,21 @@
         font-weight: bold;
         text-align: center;
     }
+
+    #back-btn {
+        z-index:1;
+        position: absolute;
+        top: 30px;
+        left: 20px;
+        height: 21px;
+        background: none;
+        border: none;
+    }
+
 </style>
 
 <body>
+    <img id="back-btn" src="../static/back-icon.png" onclick="window.location.href = 'first.html'" height="20">
 <table id="ranklist">
     <img class="box" src="../static/top3.png">
     <tr class="table-head">
