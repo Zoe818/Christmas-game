@@ -242,24 +242,24 @@
     /* tags imgs */
 
     .elk-none {
-        background-image: url("../static/elk-none.png");
+        background-image: url("../static/elk-none.svg");
     }
     .elk-active {
-        background-image: url("../static/elk-active.png");
+        background-image: url("../static/elk-active.svg");
     }
 
     .hat-none {
-        background-image: url("../static/hat-none.png");
+        background-image: url("../static/hat-none.svg");
     }
     .hat-active {
-        background-image: url("../static/hat-active.png");
+        background-image: url("../static/hat-active.svg");
     }
 
     .oji-none {
-        background-image: url("../static/ojichyan-none.png");
+        background-image: url("../static/oji-none.svg");
     }
     .oji-active {
-        background-image: url("../static/ojichyan-active.png");
+        background-image: url("../static/oji-active.svg");
     }
 </style>
 <body>
@@ -314,8 +314,8 @@
     <div class="slide" id="slide-div">
     </div>
     <div id="final-btn-group">
-        <img src="../static/save.png" width="230" onclick="saveImage()">
-        <img src="../static/final-again.png" width="230" onclick="window.location.href='first.html'">
+        <img src="../static/save.svg" width="230" onclick="saveImage()">
+        <img src="../static/final-again.svg" width="230" onclick="window.location.href='first.html'">
     </div>
 
     <script src="../js/fetch.js"></script>
@@ -572,7 +572,7 @@
             }).appendTo(elelayer);
             icon_file = document.getElementById('target-img');
 
-            $(`<img id="rotate-btn" src="../static/turn.png">`).appendTo(elelayer);
+            $(`<img id="rotate-btn" src="../static/turn.svg">`).appendTo(elelayer);
             let widthOrg = elelayer.find("img").width(),
                 heightOrg = elelayer.find("img").height();
             // 生成图片所对应的所有属性
