@@ -314,7 +314,7 @@
     <div class="slide" id="slide-div">
     </div>
     <div id="final-btn-group">
-        <img src="../static/save.svg" width="230" onclick="saveImage()">
+        <img src="../static/baocun.png" width="230" onclick="saveImage()">
         <img src="../static/final-again.svg" width="230" onclick="window.location.href='first.html'">
     </div>
 
@@ -676,11 +676,11 @@
             let data = {
                 avatar_width: 200,
                 avatar_height: 200,
-                hat_w: parseInt(item.width * item.scale),
-                hat_h: parseInt(item.height * item.scale),
-                hat_x: parseInt(item.left - pos.x + (item.width * item.scale)/2),
-                hat_y: parseInt(item.top - pos.y + (item.height * item.scale)/2),
-                hat_rotate: parseInt(item.rotate),
+                hat_w: parsefloat(item.width * item.scale),
+                hat_h: parsefloat(item.height * item.scale),
+                hat_x: parsefloat(item.left - pos.x + (item.width * item.scale)/2),
+                hat_y: parsefloat(item.top - pos.y + (item.height * item.scale)/2),
+                hat_rotate: parseFloat(item.rotate),
             };
             let loading = document.createElement('span');
             loading.innerHTML = 'Loading...';
