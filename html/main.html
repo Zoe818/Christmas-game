@@ -132,11 +132,11 @@
 	},1000);
 
 	function saveGrade() {
+        localStorage.setItem('grade', s);
         let resGrade = localStorage.getItem('maxGrade');
-        if(String(resGrade) === 'null') {
+        if(String(resGrade) === 'null' || String(resGrade) === '') {
             localStorage.setItem('maxGrade', s);
         } else {
-            localStorage.setItem('grade', s);
             if(parseInt(resGrade) < s) {
                 localStorage.setItem('maxGrade', s);
             }
