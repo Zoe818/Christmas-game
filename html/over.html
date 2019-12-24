@@ -121,7 +121,7 @@
     document.getElementById('submit-btn').onclick = async () => {
         let grade = parseInt(localStorage.getItem('grade'));
         let resname = localStorage.getItem('nickname');
-        if(String(resname) === 'null' || String(resname) === '') {
+        if(String(resname) === 'null' || String(resname) === '' || String(resname) === undefined || String(resname) === null) {
             localStorage.setItem('nickname', nickname);
         }
         const pkey = 'j&@09D)';

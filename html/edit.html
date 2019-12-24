@@ -386,6 +386,7 @@
             var cas = $('#tailoringImg').cropper('getCroppedCanvas');//获取被裁剪后的canvas
             var base64url = cas.toDataURL('image/png'); 
             $("#final-img").prop("src",base64url);
+            // $("#final-img").prop('crossorigin', 'anonymous');
             bg_file = document.getElementById('final-img');
             closeTailor();
         }
@@ -676,11 +677,13 @@
             let data = {
                 avatar_width: 200,
                 avatar_height: 200,
-                hat_w: parsefloat(item.width * item.scale),
-                hat_h: parsefloat(item.height * item.scale),
-                hat_x: parsefloat(item.left - pos.x + (item.width * item.scale)/2),
-                hat_y: parsefloat(item.top - pos.y + (item.height * item.scale)/2),
-                hat_rotate: parseFloat(item.rotate),
+                hat_w: parseInt(item.width * item.scale),
+                hat_h: parseInt(item.height * item.scale),
+                hat_x: parseInt(item.left - pos.x),
+                // hat_x: parseInt(item.left - pos.x + (item.width * item.scale)/2),
+                // hat_y: parseInt(item.top - pos.y + (item.height * item.scale)/2),
+                hat_y: parseInt(item.top - pos.y),
+                hat_rotate: parseInt(item.rotate),
             };
             let loading = document.createElement('span');
             loading.innerHTML = 'Loading...';

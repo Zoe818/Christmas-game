@@ -97,6 +97,7 @@
 						time.innerHTML=t/2;
 						if(t<=0&&s>0)
 						{
+						    saveGrade();
 							clearInterval(start);
 							clearInterval(id);
 							if(String(nickname)!=='null')
@@ -107,6 +108,7 @@
 					},1000)
 				}
 				else if(t<=0&&s<300){
+				    saveGrade();
 					clearInterval(start);
 					clearInterval(id);
 					if(String(nickname)!=='null')
@@ -119,6 +121,7 @@
 		}
 		else if(t<=0&&s<100)
 		{
+		    saveGrade();
 			clearInterval(start);
 			clearInterval(id);
 			if(String(nickname)!=null)
